@@ -1,0 +1,6 @@
+*.lib filter=lfs diff=lfs merge=lfs -text
+*.dll filter=lfs diff=lfs merge=lfs -text
+<<<<<<< HEAD
+*.uasset filter=lfs diff=lfs merge=lfs -text
+=======
+>>>>>>> 9c9051e78e657871a7f500e61e392a1ffe9f6c51

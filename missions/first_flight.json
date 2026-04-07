@@ -1,0 +1,11 @@
+{
+  "mission_id": "first_flight",
+  "description": "Beginner flight: take off, move forward, stabilize, and land.",
+  "version": "1.0",
+  "steps": [
+    { "command": "Takeoff", "duration": 0 },
+    { "command": "Forward", "duration": 2 },
+    { "command": "State_Polling", "duration": 1 },
+    { "command": "Land", "duration": 0 }
+  ]
+}
