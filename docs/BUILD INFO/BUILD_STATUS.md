@@ -56,7 +56,7 @@ git clone https://github.com/iamaisim/ProjectAirSim.git
 cd PathtoClone/sdk/ProjectAirSim
 set VSCMD_ARG_TGT_ARCH=x64
 set VSCMD_ARG_HOST_ARCH=x64
-set UE_ROOT=C:\Program Files\Epic Games\UE_5.7
+set UE_ROOT="C:\Program Files\Epic Games\UE_5.7"
 build.cmd -Wno-dev simlib_release
 ```
 
