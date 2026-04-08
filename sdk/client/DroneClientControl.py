@@ -2,9 +2,6 @@
 import asyncio
 
 from projectairsim import ProjectAirSimClient, Drone, World
-from projectairsim.utils import projectairsim_log
-
-
 
 ###imports for user Control
 import time
@@ -14,10 +11,7 @@ import re
 import json
 import asyncio
 from UserControl import UserControl
-<<<<<<< HEAD
-=======
 from DroneSquare import fly_square
->>>>>>> 9c9051e78e657871a7f500e61e392a1ffe9f6c51
 
 async def main():
     DroneController = UserControl()
