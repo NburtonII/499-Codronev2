@@ -1,4 +1,72 @@
-16:27:13:046 [INFO] Connecting to simulation server at 127.0.0.1
-16:27:13:061 [INFO] Connection opened.
-16:27:13:061 [INFO] Started the pub-sub topic receiving thread.
-16:27:13:062 [INFO] Loading scene config: C:\Users\Ncburton\Desktop\499-Codrone-Sim\sdk/client/sim_config/scene_basic_drone.jsonc
+16:36:54:607 [INFO] Connecting to simulation server at 127.0.0.1
+16:36:54:626 [INFO] Connection opened.
+16:36:54:626 [INFO] Started the pub-sub topic receiving thread.
+16:36:54:627 [INFO] Loading scene config: C:\Users\Ncburton\Desktop\499-Codrone-Sim\sdk/client/sim_config/scene_basic_drone.jsonc
+16:36:56:816 [INFO] Getting the list of available topic info from the sim server...
+16:36:56:841 [INFO] Successfully received topic info list.
+16:36:58:850 [INFO] World object updated for the loaded scene '/Sim/SceneBasicDrone'. Note: Any previous Drone object instances may no longer be valid.
+16:36:58:852 [INFO] Trajectory 'null_trajectory' imported successfully.
+16:36:58:852 [INFO] Initalizing Drone 'Drone1'...
+16:36:58:852 [INFO] -------------------------------------------------
+16:36:58:852 [INFO] The following topics can be subscribed to for robot 'Drone1':
+16:36:58:853 [INFO]     sensors["Chase"]["scene_camera"]
+16:36:58:857 [INFO]     sensors["Chase"]["scene_camera_info"]
+16:36:58:857 [INFO]     sensors["DownCamera"]["scene_camera"]
+16:36:58:857 [INFO]     sensors["DownCamera"]["scene_camera_info"]
+16:36:58:857 [INFO]     sensors["DownCamera"]["depth_camera"]
+16:36:58:857 [INFO]     sensors["DownCamera"]["depth_camera_info"]
+16:36:58:859 [INFO]     sensors["IMU1"]["imu_kinematics"]
+16:36:58:859 [INFO]     sensors["GPS"]["gps"]
+16:36:58:859 [INFO]     sensors["Barometer"]["barometer"]
+16:36:58:859 [INFO]     sensors["Magnetometer"]["magnetometer"]
+16:36:58:859 [INFO]     sensors["FrontRange"]["distance_sensor"]
+16:36:58:859 [INFO]     sensors["BottomRange"]["distance_sensor"]
+16:36:58:859 [INFO]     robot_info["actual_pose"]
+16:36:58:859 [INFO]     robot_info["collision_info"]
+16:36:58:862 [INFO]     robot_info["rotor_info"]
+16:36:58:862 [INFO] -------------------------------------------------
+16:36:58:862 [INFO] Drone 'Drone1' initialized for World scene '/Sim/SceneBasicDrone'
+16:36:58:867 [WARNING] Startup.json malformed; recovered RunNumber from file.
+16:36:58:875 [INFO] Connected to AirSim with run number: 20
+16:36:58:887 [INFO] Welcome to to Class 499's Codrone Simulator!
+ We will begin the connecting process now.
+16:36:58:887 [INFO] Valid Commands: 
+16:36:58:889 [INFO] Reset
+16:36:58:891 [INFO] Close
+16:36:58:891 [INFO] Takeoff
+16:36:58:891 [INFO] State_Polling
+16:36:58:891 [INFO] Land
+16:36:58:891 [INFO] Forward
+16:36:58:892 [INFO] Backward
+16:36:58:892 [INFO] Left
+16:36:58:892 [INFO] Right
+16:36:58:894 [INFO] Up
+16:36:58:894 [INFO] Down
+16:36:58:894 [INFO] Yaw_Left
+16:36:58:894 [INFO] Yaw_Right
+16:36:58:898 [INFO] Square
+16:36:58:898 [INFO] 
+
+16:40:07:056 [INFO] takeoff_async: starting
+16:40:10:660 [INFO] takeoff_async: completed
+16:40:11:156 [INFO] Drone State at Wed Apr  8 16:40:11 2026:
+  Position  -> N: -0.000, E: -0.000, D: -1.623
+  Orientation -> W: 1.000, X: 0.000, Y: 0.000, Z: 0.000
+  Range -> Front: n/a cm, Bottom: n/a cm
+16:42:06:517 [INFO] Closing User Control
+16:42:06:518 [INFO] Run number 20, has been closed and saved. Thank you.
+16:42:06:529 [INFO] Disconnecting from simulation server...
+16:42:06:548 [INFO] Disconnected.
+16:42:06:549 [INFO] User Control Closed Successfully.
+16:42:06:550 [INFO] Run number 21 has been closed and saved to C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunCommands\Run_20_Commands.csv and C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunTelemetry\Run_20_Telemetry.csv. Thank you.
+16:42:06:550 [INFO] 
+Interrupted by user.
+16:42:06:550 [INFO] Closing User Control
+16:42:06:550 [INFO] Run number 20, has been closed and saved. Thank you.
+16:42:06:552 [INFO] Disconnecting from simulation server...
+16:42:06:552 [WARNING] Unable to unsubscribe from all topics.
+16:42:06:552 [INFO] Disconnected.
+16:42:06:554 [INFO] User Control Closed Successfully.
+16:42:06:554 [INFO] Run number 22 has been closed and saved to C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunCommands\Run_20_Commands.csv and C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunTelemetry\Run_20_Telemetry.csv. Thank you.
+16:42:06:554 [INFO] Exiting Drone Control. Goodbye!
+

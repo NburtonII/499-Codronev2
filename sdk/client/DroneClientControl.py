@@ -2,7 +2,7 @@
 import asyncio
 
 from projectairsim import ProjectAirSimClient, Drone, World
-
+from projectairsim.utils import projectairsim_log
 ###imports for user Control
 import time
 import csv

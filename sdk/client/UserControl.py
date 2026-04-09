@@ -7,6 +7,7 @@ import asyncio
 import math
 
 from projectairsim import ProjectAirSimClient, Drone, World
+from projectairsim.utils import projectairsim_log
 from DroneSquare import fly_square
 from range_sensor import get_bottom_range, get_front_range
 

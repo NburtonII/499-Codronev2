@@ -6,11 +6,7 @@
       "type": "robot",
       "name": "Drone1",
       "origin": {
-<<<<<<< HEAD
         "xyz": "0 0 0",
-=======
-        "xyz": "0 0 30",
->>>>>>> 9c9051e78e657871a7f500e61e392a1ffe9f6c51
         "rpy-deg": "0 0 0"
       },
       "robot-config": "robot_quadrotor_fastphysics.jsonc"
