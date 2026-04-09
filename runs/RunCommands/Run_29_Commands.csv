@@ -1,0 +1,11 @@
+timestamp,command,duration_s,status,notes
+Thu Apr  9 16:21:26 2026,Takeoff,0,ok,
+Thu Apr  9 16:21:31 2026,Forward,2,ok,
+Thu Apr  9 16:21:36 2026,Yaw_Right,2,ok,
+Thu Apr  9 16:21:41 2026,Forward,2,ok,
+Thu Apr  9 16:21:45 2026,Yaw_Right,2,ok,
+Thu Apr  9 16:21:50 2026,Forward,2,ok,
+Thu Apr  9 16:21:55 2026,Yaw_Right,2,ok,
+Thu Apr  9 16:21:59 2026,Forward,2,ok,
+Thu Apr  9 16:22:04 2026,Yaw_Right,2,ok,
+Thu Apr  9 16:22:33 2026,Land,0,ok,

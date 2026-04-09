@@ -1,0 +1,13 @@
+{
+  "mission_id": "Forward",
+  "description": "Fly forward this still takes Duration.",
+  "version": "1.0",
+  "steps": [
+    { "command": "Takeoff",   "duration": 0 },
+    { "command": "Forward",   "duration": 3 },
+    { "command": "Forward",   "duration": 1 },
+    { "command": "Forward",   "duration": 2 },
+    { "command": "Forward",   "duration": 1 },
+    { "command": "Land",      "duration": 0 }
+  ]
+}

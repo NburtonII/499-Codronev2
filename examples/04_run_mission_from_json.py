@@ -23,35 +23,45 @@ from UserControl import UserControl          # noqa: E402
 from mission_runner import run_mission       # noqa: E402
 
 
-MISSION_FILE = os.path.join(
-    os.path.dirname(__file__), "..", "missions", "square_path.json"
-)
+MISSION_FILES = [
+    
+    os.path.join(
+        os.path.dirname(__file__), "..", "missions", "first_flight.json"
+    ),
+    os.path.join(
+        os.path.dirname(__file__), "..", "missions", "square_path.json"
+    ),
+    os.path.join(
+        os.path.dirname(__file__), "..", "missions", "Forward.json"
+    )
+]
 
 
 async def main():
-    mission_path = os.path.abspath(MISSION_FILE)
-    print(f"Mission file : {mission_path}")
+    for mission_file in MISSION_FILES:
+        mission_path = os.path.abspath(mission_file)
+        print(f"Mission file : {mission_path}")
 
-    controller = UserControl()
-    controller.connect()
-    try:
-        print("Running mission ...\n")
-        metrics, steps = await run_mission(mission_path, controller)
-        print(f"Mission Description: {metrics['description']}\n")
-        print("Command Log: ")
-        for step in steps:
-            print(f"  - Command: {step['command']}, Duration: {step['duration']}\n")
-            
-        print("--- Mission Complete ---")
-        print(f"  Success          : {metrics['success']}")
-        print(f"  Completion time  : {metrics['completion_time_s']} s")
-        print(f"  Collisions       : {metrics['collisions']}")
-        if metrics["failure_reason"]:
-            print(f"  Failure reason   : {metrics['failure_reason']}")
-        print(f"\n  metrics.json written to: "
-              f"runs/Run_{controller.runNumber}_metrics.json")
-    finally:
-        controller.close()
+        controller = UserControl()
+        controller.connect()
+        try:
+            print("Running mission ...\n")
+            metrics, steps = await run_mission(mission_path, controller)
+            print(f"Mission Description: {metrics['description']}\n")
+            print("Command Log: ")
+            for step in steps:
+                print(f"  - Command: {step['command']}, Duration: {step['duration']}\n")
+                
+            print("--- Mission Complete ---")
+            print(f"  Success          : {metrics['success']}")
+            print(f"  Completion time  : {metrics['completion_time_s']} s")
+            print(f"  Collisions       : {metrics['collisions']}")
+            if metrics["failure_reason"]:
+                print(f"  Failure reason   : {metrics['failure_reason']}")
+            print(f"\n  metrics.json written to: "
+                f"runs/Run_{controller.runNumber}_metrics.json")
+        finally:
+            controller.close()
 
 
 if __name__ == "__main__":

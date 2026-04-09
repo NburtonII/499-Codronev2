@@ -1,0 +1,5 @@
+timestamp,command,duration_s,status,notes
+Thu Apr  9 16:20:43 2026,Takeoff,0,ok,
+Thu Apr  9 16:20:48 2026,Forward,2,ok,
+Thu Apr  9 16:20:50 2026,State_Polling,1,ok,
+Thu Apr  9 16:21:09 2026,Land,0,ok,
