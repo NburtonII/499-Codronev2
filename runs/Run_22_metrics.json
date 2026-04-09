@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "completion_time_s": 0.0,
+  "collisions": 0,
+  "failure_reason": "'UserControl' object has no attribute 'testingInterface'",
+  "min_front_range_cm": null
+}

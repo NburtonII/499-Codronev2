@@ -65,7 +65,7 @@ def load_mission(json_path):
                 f"Must be a non-negative number."
             )
 
-    return steps
+    return mission
 
 
 async def run_mission(json_path, controller):
@@ -82,19 +82,22 @@ async def run_mission(json_path, controller):
     Returns:
         dict: Metrics with keys: success, completion_time_s, collisions, failure_reason.
     """
-    steps = load_mission(json_path)
+    with open(json_path, "r") as f:
+        mission = json.load(f)
 
+    steps = mission["steps"]
+    description = mission.get("description", "")
     start_time = time.time()
     success = True
     failure_reason = None
     front_range_readings = []
 
     try:
+        ## This section can almost certainly be optimized.
         for step in steps:
             command = step["command"]
             duration = step["duration"]
 
-            controller.save_Command(command, duration)
             await controller.commandParse(command, duration)
 
             # Collect a front range reading after each step.
@@ -121,6 +124,7 @@ async def run_mission(json_path, controller):
     min_front_range_cm = round(min(front_range_readings), 3) if front_range_readings else None
 
     metrics = {
+        "description": description,
         "success": success,
         "completion_time_s": completion_time_s,
         "collisions": collisions,
@@ -129,7 +133,7 @@ async def run_mission(json_path, controller):
     }
 
     _write_metrics(metrics, controller)
-    return metrics
+    return metrics, steps
 
 
 def _write_metrics(metrics, controller):

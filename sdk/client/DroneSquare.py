@@ -1,7 +1,6 @@
 import asyncio
 import math
 from projectairsim import Drone
-##from projectairsim import projectairsim_log
 
 async def fly_square(drone, side_length=10, duration_per_side=5, takeoff_height=5):
     """

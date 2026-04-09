@@ -1,0 +1,8 @@
+{
+  "description": "Fly a square path: takeoff, four forward legs with right turns, land.",
+  "success": true,
+  "completion_time_s": 78.982,
+  "collisions": 0,
+  "failure_reason": null,
+  "min_front_range_cm": null
+}

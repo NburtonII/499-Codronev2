@@ -14,7 +14,7 @@ from range_sensor import get_bottom_range, get_front_range
 
 DEFAULT_MAPS_CONFIG = {
     "BasicArena": {
-        "scene_config": "sdk/client/sim_config/scene_basic_drone.jsonc"
+        "scene_config": "sdk/client/sim_config/BasicArenaDrone.jsonc"
     }
 }
 
@@ -75,6 +75,7 @@ class UserControl:
             try:
                 ##The world object wiil load the scene file determined by the user's map selection and will be used to spawn the drone object and send reset commands to the simulator
                 ##scene_file comes from _detect_map() which asks the user which map they have loaded in Unreal and returns the corresponding scene config filename from maps_config.json
+                os.chdir(os.path.join(self.project_root, "sdk", "client"))
                 self.world = World(self.client, scene_file, delay_after_load_sec=2)
             except Exception as e:
                 projectairsim_log().error(f"Error creating world: {e}")
@@ -138,12 +139,14 @@ class UserControl:
         )    
 
     def _load_maps_config(self):
-        maps_file = os.path.join(self.project_root, 'runs', 'maps_config.json')
+        maps_file = os.path.join(self.project_root, 'sdk', 'client', 'sim_config', 'maps_config.json')
         if not os.path.exists(maps_file):
             self.maps_config = DEFAULT_MAPS_CONFIG.copy()
+            print('Debug: default map config: ',self.maps_config)
             return
         with open(maps_file, 'r') as f:
             self.maps_config = json.load(f)
+            print('Debug: MapChosen: ',self.maps_config)
 
     def _resolve_scene_config(self, scene_config):
         if os.path.isabs(scene_config):
@@ -526,6 +529,21 @@ class UserControl:
 
             await asyncio.sleep(1)
 
+    async def TestingInterface(self, comList):
+        for com in comList:
+            try:
+                command, duration = self.verify_Command(com)
+                self.commandContentVerification(command, duration)
+            except Exception as e:
+                projectairsim_log().error(f"Error occurred while verifying command: {e}")
+                return
+            
+
+            ## removed the save_Command line. Due to updates, save_Command is called inside commandParse after each command completes
+            await self.commandParse(command, duration)
+            yield command, duration
+
+    
     async def Input_Command(self):
         ##Accept a users command then send it to save_command
         command = None
@@ -536,19 +554,27 @@ class UserControl:
             projectairsim_log().info("\n")
             inputCommand = input("Enter Command: ")
             command, duration = self.verify_Command(inputCommand)
-            if command is None:
-                projectairsim_log().error("Invalid command format. Please enter a command in the format 'Command(Duration in seconds)'. For example: 'Takeoff()' or 'State_Polling(5)'.")
-            elif duration < 0:
-                projectairsim_log().error("Duration must be a positive integer or empty. Please try again.")
+            if not self.commandContentVerification(command, duration):
                 command = None
-            elif command not in self.commandList:
-                projectairsim_log().error(f"Command must be one of the following: {'| '.join(self.commandList)}. Please try again.")
-                command = None
-        
+
         ## removed the save_Command line. Due to updates, save_Command is called inside commandParse after each command completes
         await self.commandParse(command, duration)
     
-    
+    def commandContentVerification(self, command, duration):
+        if command is None:
+            projectairsim_log().error("Invalid command format. Please enter a command in the format 'Command(Duration in seconds)'. For example: 'Takeoff()' or 'State_Polling(5)'.")
+            return False
+        elif duration < 0:
+            projectairsim_log().error("Duration must be a positive integer or empty. Please try again.")
+            command = None
+            return False
+        elif command not in self.commandList:
+            projectairsim_log().error(f"Command must be one of the following: {'| '.join(self.commandList)}. Please try again.")
+            command = None
+            return False
+        return True
+
+
     def close(self):
         projectairsim_log().info("Closing User Control")
         projectairsim_log().info(f"Run number {self.runNumber}, has been closed and saved. Thank you.")

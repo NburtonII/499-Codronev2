@@ -87,10 +87,8 @@ async def run_lab():
     finally:
         controller.close()
 
-
 async def main():
     await run_lab()
-
 
 if __name__ == "__main__":
     asyncio.run(main())

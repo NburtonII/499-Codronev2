@@ -34,11 +34,14 @@ async def main():
 
     controller = UserControl()
     controller.connect()
-
     try:
         print("Running mission ...\n")
-        metrics = await run_mission(mission_path, controller)
-
+        metrics, steps = await run_mission(mission_path, controller)
+        print(f"Mission Description: {metrics['description']}\n")
+        print("Command Log: ")
+        for step in steps:
+            print(f"  - Command: {step['command']}, Duration: {step['duration']}\n")
+            
         print("--- Mission Complete ---")
         print(f"  Success          : {metrics['success']}")
         print(f"  Completion time  : {metrics['completion_time_s']} s")

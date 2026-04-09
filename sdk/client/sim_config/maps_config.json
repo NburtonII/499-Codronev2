@@ -1,0 +1,10 @@
+{
+  "BasicArena": {
+    "scene_config": "BasicArenaDrone.jsonc"
+  },
+
+  "ClassRoom":{
+    "scene_config": "ClassRoomDrone.jsonc"
+
+  }
+}
