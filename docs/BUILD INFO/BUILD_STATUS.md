@@ -15,6 +15,7 @@ A golden machine is the computer that this project was required to run on. At th
 
 We have to test what the minimum requirements for the project are, but we will try our best to test this in the future.
 
+
 ##  Set Up Instructions
 
 The following are steps to set up the AirSim dependencies in the project.
@@ -59,17 +60,39 @@ set VSCMD_ARG_HOST_ARCH=x64
 set UE_ROOT="C:\Program Files\Epic Games\UE_5.7"
 build.cmd -Wno-dev simlib_release
 ```
-NOTE: If you run into "The system cannot find the path specified" error, you could likely do this:
+NOTE: If you run into "The system cannot find the path specified" error, you could likely do the following:
 * Fix the vcvarsall.bat path in build.cmd
     - The script hardcoded the path to BuildTools flavor of VS 2022, which wasn't present. Change to the Community/Enterprise/Professional install path(whatever version of Visual Studio you have).
     - To make this edit, run ```bash notepad build.cmd ``` to edit the build.cmd and change "BuildTools" and remove "(x86)" in this line:
-    - ```bash
+      ```bash
       call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x64 -vcvars_ver=%MSVC_VER%
       ```
     - to look like this(if using Community):
-    - ```bash
+      ```bash
       call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x64 -vcvars_ver=%MSVC_VER%
       ```
+    - Save the file afterwards
+  
+* Add the CMake policy flag in build_windows.mk
+    - Open the file on notepad running ```bash notepad build_windows.mk ``` to edit the build_windows.mk
+    - Locate this:
+      ```bash
+      CMAKE_CMD = cmake -G "Ninja" \
+                                  -DCMAKE_C_COMPILER=cl.exe \
+                                  -DCMAKE_CXX_COMPILER=cl.exe
+      ```
+    - Include "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" on a new line. Make sure to add a space and a backward slash at the end of the second line. Result:
+      ```bash
+      CMAKE_CMD = cmake -G "Ninja" \
+                                  -DCMAKE_C_COMPILER=cl.exe \
+                                  -DCMAKE_CXX_COMPILER=cl.exe \
+                                  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ```
+
+AFTER ALL THESE ARE DONE, YOU CAN THEN RE-RUN 
+- ```bash
+     build.cmd simlibs_release
+  ```
+  
 5. Navigate to sdk\ProjectAirSim\unreal\Blocks. Run: blocks_genprojfiles_vscode.bat
 
   >[!Note]
