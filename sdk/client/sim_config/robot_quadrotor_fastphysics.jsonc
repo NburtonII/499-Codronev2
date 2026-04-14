@@ -301,6 +301,30 @@
     }
   ],
   "sensors": [
+  {
+      "id": "lidar1",
+      "type": "lidar",
+      "enabled": true,
+      "parent-link": "LidarMountPoint",
+      "lidar-type": "generic_cylindrical",
+      "number-of-channels": 16,
+      "range" : 100,
+      "points-per-second": 100000,
+      "report-frequency": 0,
+      "horizontal-rotation-frequency":10.0,
+      "horizontal-fov-start-deg": 0.0,
+      "horizontal-fov-end-deg": 360.0,
+      "vertical-rotation-frequency": 0.0,
+      "vertical-fov-lower-deg": -45.0,
+      "vertical-fov-upper-deg": -15.0,
+      "radial-scaling": 1.0,
+      "disable-self-hits": false,
+      "draw-debug-points": false,
+      "origin": {
+        "xyz": "0.6 0 0",
+        "rpy-deg": "0 0 0"
+      }
+    },
     {
       "id": "Chase",
       "type": "camera",

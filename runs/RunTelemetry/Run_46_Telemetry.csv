@@ -1,0 +1,3 @@
+timestamp,x,y,z,w,orient_x,orient_y,orient_z,collision,front_range_cm,bottom_range_cm
+Tue Apr 14 15:46:30 2026,-1.856680434397795e-11,-1.4834864893295872e-16,-1.645540714263916,1,0,0,0,False,,
+Tue Apr 14 15:46:39 2026,-1.856680434397795e-11,-1.4834864893295872e-16,-1.6627124547958374,1,0,0,0,False,,

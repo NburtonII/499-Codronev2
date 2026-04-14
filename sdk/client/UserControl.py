@@ -5,6 +5,8 @@ import re
 import json
 import asyncio
 import math
+import numpy as np
+import threading
 
 from projectairsim import ProjectAirSimClient, Drone, World
 from projectairsim.utils import projectairsim_log
@@ -36,7 +38,7 @@ EVENT_COLUMNS = ["timestamp", "event_type", "details"]
 
 
 class UserControl:
-    def __init__(self):
+    def __init__(self, duration:float =10):
         self.project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         self.CommandFilePath = None
         self.TelemetryFilePath = None
@@ -48,19 +50,44 @@ class UserControl:
         self.takeOff = False
         self.commandList = ["Reset","Close", "Takeoff", "State_Polling","Land", "Forward", "Backward", "Left", "Right", "Up", "Down", "Yaw_Left", "Yaw_Right", "Square"]
         self.com_Pattern = "|".join(self.commandList)
+
+        ## World Set up data
         self.world = None
         self.drone = None 
         self.current_map = "BasicArena"
         self.maps_config = None
+
+        ##Drone Data
         self.latest_pose = None
         self.collision = False
         self.safeCollisionObjects = ["StaticMeshActor1"]
 
+        ##setup for drone lidar
+        self.duration = duration
+        self.num_points = 0
+        self.is_start_time_initialized = False
+        self.start_time = 0
+        self.last_realTime = 0
+        self.last_realTime = 0
+        self.last_simTime =  0
+        self.Real_time_Elapsed = 0
+        self.sim_time_Elapsed = 0
+        self.is_timer_thread_active = True
+        self.timer_thread = threading.Thread(
+            target=self.repeat_timer_callback, args=(self.timer_callback, 0.1)
+        )
 
         self.Kill_z_up = -100
         self.kill_z_down = 0.5
 
-
+    def repeat_timer_callback(self, task, period):
+        while self.is_timer_thread_active:
+            task()
+            time.sleep(period)
+    
+    def timer_callback(self):
+        if (time.time() - self.start_time) > self.duration:
+            self.is_timer_thread_active = False
     def connect(self):
         try:
             self._load_maps_config()
@@ -128,7 +155,7 @@ class UserControl:
         self._write_run_metadata("connected")
 
     def _subscribe_drone_topics(self):
-    ###Subscribe to pose and collision topics for the current drone object.
+    ###Subscribs to the sensors neccessary for the project
         self.client.subscribe(
             self.drone.robot_info["actual_pose"],
             lambda _, pose: setattr(self, 'latest_pose', pose)
@@ -136,6 +163,12 @@ class UserControl:
         self.client.subscribe(
             self.drone.robot_info["collision_info"],
             lambda _, collision: self._on_collision(collision)
+        )
+
+        self.client.subscribe(
+            self.drone.sensors["lidar1"]["lidar"],
+            # Square Path
+            lambda _, lidar_msg:self.lidar_callback(lidar_msg),
         )    
 
     def _load_maps_config(self):
@@ -297,11 +330,57 @@ class UserControl:
         except Exception as e:
             projectairsim_log().error(f"resetSimulator: drone re-initialization failed — {e}")
 
-    ##need to add an array of velocities
+
+    def safe_division(self, x, y):
+        if y == 0:
+            return 0
+        return x / y
+    
+    def lidar_callback(self, lidar_data):
+        if lidar_data is None:
+            return
+        
+        if not self.is_start_time_initialized:
+            self.start_time = time.time()
+            self.start_simTime = lidar_data["time_stamp"]
+            self.is_start_time_initialized = True
+            return
+       
+        raw = np.array(lidar_data["point_cloud"], dtype=np.float32)
+        if raw.size == 0:
+            return
+        
+        points = np.reshape(raw,(-1,3))
+        self.num_points += points.shape[0]
+        elapsed = time.time() - self.start_time
+        # projectairsim_log().info(
+        #     f"Received {points.shape[0]} Points | "
+        #     f"Total {self.num_points} points | "
+        #     f"Elapsed time: {elapsed:.2f} seconds | "
+        #     f"Avg rate: {self.safe_division(self.num_points, elapsed):.2f} points |"
+        #     f"Points  Cloud: {points}")
+
+        self.last_realTime = time.time()
+        self.last_simTime = lidar_data["time_stamp"]
+        # print("Points Cloud:", points)
+
+    def detect_Obstacle(points, threshold = 5.0):
+        distances = np.linalg.norm(points, axis=1)
+        return np.any(distances < threshold)
+    async def move_Drone(self, downVelocity = 0, northVelocity = 0, eastVelocity = 0, duration=5.0):
+        move_down_task = await self.drone.move_by_velocity_async(
+                            v_north=northVelocity, 
+                            v_east=eastVelocity, 
+                            v_down=downVelocity, 
+                            duration=duration
+                        )
+        await move_down_task
+    
     async def commandParse(self, com, dur):
-        ## Commands to be implemented "Foward, backward, left, up, down, right, yaw_left, yaw_right, hover, pitch_foward, pitch_back, roll_left, roll_right"
+        ## Commands to be implemented "Forward, backward, left, up, down, right, yaw_left, yaw_right, hover, pitch_foward, pitch_back, roll_left, roll_right"
         ##Duration measured in seconds however i may need to add speed/velocity values
         if com == "Close":
+            self.is_timer_thread_active = False
             self.close()
         elif com == "Reset":
             projectairsim_log().info("Reset: initiating simulator-level scene reload...")
@@ -315,6 +394,10 @@ class UserControl:
                         projectairsim_log().info("takeoff_async: starting")
                         takeoff_task = await self.drone.takeoff_async()
                         await takeoff_task
+                        self.timer_thread.start()
+                        print("Lidar Started: ", self.timer_thread.is_alive(),
+                              "\nTime: ", time.time() - self.start_time)
+                        
                         projectairsim_log().info("takeoff_async: completed")
                         self.takeOff = True
                         await self.statePoll(1)
@@ -379,48 +462,31 @@ class UserControl:
                 projectairsim_log().info("Drone is not in the air.")
             else:
                 try:
+                    ##Update to accept Direction Velocity and duration
                     velocity = 5  # Default velocity value
                     if com == "Forward":
-                        move_down_task = await self.drone.move_by_velocity_async(
-                            v_north=velocity, v_east=0.0, v_down=0.0, duration=dur
-                        )
                         projectairsim_log().info("Move-Forward Invoked")
-                        await move_down_task
+                        await self.move_Drone(northVelocity=velocity, duration=dur)
                         projectairsim_log().info("Move-Forward Completed")
                     elif com == "Backward":
-                        move_down_task = await self.drone.move_by_velocity_async(
-                            v_north=-velocity, v_east=0.0, v_down=0.0, duration=dur
-                        )
                         projectairsim_log().info("Move-Backward Invoked")
-                        await move_down_task
+                        await self.move_Drone(northVelocity=-velocity, duration=dur)
                         projectairsim_log().info("Move-Backward Completed")
                     elif com == "Left":
-                        move_down_task = await self.drone.move_by_velocity_async(
-                            v_north=0.0, v_east=-velocity, v_down=0.0, duration=dur
-                        )
                         projectairsim_log().info("Move-Left Invoked")
-                        await move_down_task
+                        await self.move_Drone(eastVelocity=-velocity, duration=dur)
                         projectairsim_log().info("Move-Left Completed")
                     elif com == "Right":
-                        move_down_task = await self.drone.move_by_velocity_async(
-                            v_north=0.0, v_east=velocity, v_down=0.0, duration=dur
-                        )
                         projectairsim_log().info("Move-Right Invoked")
-                        await move_down_task
+                        await self.move_Drone(eastVelocity=velocity, duration=dur)
                         projectairsim_log().info("Move-Right Completed")
                     elif com == "Up":
-                        move_down_task = await self.drone.move_by_velocity_async(
-                            v_north=0.0, v_east=0.0, v_down=-velocity, duration=dur
-                        )
                         projectairsim_log().info("Move-Up Invoked")
-                        await move_down_task
+                        self.move_Drone(downVelocity=-velocity, duration=dur)
                         projectairsim_log().info("Move-Up Completed")
                     elif com == "Down":
-                        move_down_task = await self.drone.move_by_velocity_async(
-                            v_north=0.0, v_east=0.0, v_down=velocity, duration=dur
-                        )
                         projectairsim_log().info("Move-Down Invoked")
-                        await move_down_task
+                        await self.move_Drone(downVelocity=velocity, duration=dur)
                         projectairsim_log().info("Move-Down Completed")
                     await self.statePoll(1)
                      # save once after all movement commands succeed

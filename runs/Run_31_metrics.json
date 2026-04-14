@@ -1,0 +1,8 @@
+{
+  "description": "Beginner flight: take off, move forward, stabilize, and land.",
+  "success": true,
+  "completion_time_s": 26.02,
+  "collisions": 0,
+  "failure_reason": null,
+  "min_front_range_cm": null
+}

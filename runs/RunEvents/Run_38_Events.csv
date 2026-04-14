@@ -1,0 +1,3 @@
+timestamp,event_type,details
+Mon Apr 13 12:03:53 2026,run_start,"map:BasicArena,run:38"
+Mon Apr 13 12:04:17 2026,command_failure,takeoff:name 'l' is not defined
