@@ -76,7 +76,8 @@ class UserControl:
         self.timer_thread = threading.Thread(
             target=self.repeat_timer_callback, args=(self.timer_callback, 0.1)
         )
-
+        self.Obstacle_detection_threshold = 2.0
+        self.lidar_zones = None
         self.Kill_z_up = -100
         self.kill_z_down = 0.5
 
@@ -336,8 +337,89 @@ class UserControl:
             return 0
         return x / y
     
+    def parse_lidar_zones(self, points):
+        ##parse lidar points into zones
+        if points.shape[0] == 0:
+            return None
+        
+        x = points[:,0] #North/South
+        y = points[:,1] #East/West
+        z = points[:,2] #Up/Down
+
+        Horizontal_distance = np.sqrt(x**2 + y**2)
+
+        FRONT_ANGLE = 30
+        angle_deg =np.degrees(np.arctan2(y,x))
+
+        zones = {
+            "forward":points[np.abs(angle_deg)< FRONT_ANGLE],
+            "backward":points[np.abs(angle_deg)> 150],
+            "right": points[(angle_deg > 30) & (angle_deg < 150)],
+            "left": points[(angle_deg < -30 ) & (angle_deg > -150)],
+            "above": points[z > -0.5],
+            "below": points[z < 0.5]
+        }
+
+        min_distances = {}
+        for zone_name, zone_points in zones.items():
+            if zone_points.shape[0] > 0:
+                dist = np.sqrt(
+                    np.sqrt(
+                        zone_points[:,0]**2 + 
+                        zone_points[:,1]**2 + 
+                        zone_points[:,2]**2
+                    )
+                )
+                min_distances[zone_name] = float(np.min(dist))
+            else:
+                min_distances[zone_name] = float('inf')
+
+        return min_distances
+    
+    async def _avoid_obstacle(self):
+        if not self.takeOff: 
+            return
+
+        projectairsim_log().warning("Avoidance: Stopping Movement")
+        self.save_Event("avoidance_start", f"zones: {self.lidar_zones}" )
+
+        try:
+            stop = await self.move_Drone(downVelocity=0, northVelocity=0, eastVelocity=0, duration=1.0)
+            await stop
+        except Exception as e:
+            projectairsim_log().error(f"Avoidance: failed to stop drone movement — {e}")
+            return  
+
+        await asyncio.sleep(0.5)
+        if self.lidar_zones is None:
+            return
+        
+        zones = self.lidar_zones
+        SAFE = 3.0
+
+        try:
+            if zones.get("right", 0) > SAFE:
+                projectairsim_log().info("AVOIDANCE: Path is clear on the right ")
+                avoid_right = await self.move_Drone(eastVelocity=2.0, duration=1.0)
+                await  avoid_right
+            elif zones.get("left", 0) > SAFE:
+                projectairsim_log().info("AVOIDANCE: Path is clear on the left ")
+                avoid_left = await self.move_Drone(eastVelocity=-2.0, duration=1.0)
+                await  avoid_left
+            elif zones.get("above", 0) > SAFE:
+                projectairsim_log().info("AVOIDANCE: Path is clear on the above ")
+                avoid_above = await self.move_Drone(upVelocity=-2.0, duration=1.0)
+                await  avoid_above
+            else:
+                projectairsim_log().warning("AVOIDANCE: No clear path detected, Emergency landing initiated.")
+                self.save_Event("avoidance_failure", "No clear path detected, initiating emergency landing.")
+                await self._emergency_land()
+        except Exception as e:
+            projectairsim_log().error(f"Avoidance: failed to move drone — {e}")
+
+
     def lidar_callback(self, lidar_data):
-        if lidar_data is None:
+        if lidar_data is None or self.lidar_zones is None:
             return
         
         if not self.is_start_time_initialized:
@@ -352,6 +434,17 @@ class UserControl:
         
         points = np.reshape(raw,(-1,3))
         self.num_points += points.shape[0]
+
+        ##parseZones
+        self.lidar_zones = self.parse_lidar_zones(points)
+
+        if(self.lidar_zones and self.takeOff):
+            forward_dist = self.lidar_zones.get("forward", float('inf'))
+            if forward_dist < self.Obstacle_detection_threshold:
+                projectairsim_log().warning(f"Obstacle detected within {forward_dist:.2f} meters ahead - triggering avoidance.")
+                self.save_event('Obstacle_Detected', f"Forward obstacle at {forward_dist:.2f} m")
+                loop = asyncio.get_event_loop()
+                loop.call_soon_threadsafe(lambda: asyncio.ensure_future(self._avoid_obstacle()))
         elapsed = time.time() - self.start_time
         # projectairsim_log().info(
         #     f"Received {points.shape[0]} Points | "
@@ -561,6 +654,15 @@ class UserControl:
                 front_range_cm = self._range_to_cm(front_range_m)
                 bottom_range_cm = self._range_to_cm(bottom_range_m)
                 z = pos.get("z", 0)
+            
+                if self.lidar_zones is not None:
+                    fwd = self.lidar_zones.get("forward", float('inf'))
+                    rgt = self.lidar_zones.get("right", float('inf'))
+                    lft = self.lidar_zones.get("left", float('inf'))
+                    abv = self.lidar_zones.get("above", float('inf'))
+                    blw = self.lidar_zones.get("below", float('inf'))
+                else:
+                    fwd = rgt = lft = abv = blw = float('inf')
                 if z < self.Kill_z_up or z > self.kill_z_down:
                     projectairsim_log().warning(f"Drone has exceeded safe altitude limits (z={z:.3f}). Initiating emergency landing.")
                     try:
@@ -579,15 +681,24 @@ class UserControl:
                     f"X: {orientation.get('x', 0):.3f}, "
                     f"Y: {orientation.get('y', 0):.3f}, "
                     f"Z: {orientation.get('z', 0):.3f}\n"
-                    f"  Range -> Front: {front_range_cm if front_range_cm != '' else 'n/a'} cm, "
-                    f"Bottom: {bottom_range_cm if bottom_range_cm != '' else 'n/a'} cm"
+                    f"Lidar Zones -> Forward:{fwd:.2f}m, "
+                    f"Right :{rgt:.2f}m, "
+                    f"Left  :{lft:.2f}m, "
+                    f"Above :{abv:.2f}m, "
+                    f"Below :{blw:.2f}m\n"
             )
                 TelemetryData = {
                     "timestamp": time.asctime(time.localtime()),
                     "position": pos,
                     "orientation": orientation,
-                    "front_range_cm": front_range_cm,
-                    "bottom_range_cm": bottom_range_cm,
+                    "right": rgt if rgt != float('inf') else None,
+                    "left": lft if lft != float('inf') else None,
+                    "forward": fwd if fwd != float('inf') else None,
+                    "above": abv if abv != float('inf') else None,
+                    "below": blw if blw != float('inf') else None,
+                    "collision": self.collision,
+                    "front_range_cm": front_range_cm if front_range_cm != float('inf') else None,
+                    "bottom_range_cm": bottom_range_cm if bottom_range_cm != float('inf') else None,
                 }
                 self.save_Telemetry(TelemetryData)
             else:
