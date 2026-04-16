@@ -80,3 +80,28 @@ Evidence: https://github.com/NburtonII/499-Codrone-Sim/releases/tag/v0.3-week3
 ## Known Issues
 
 - None at this time
+
+---
+
+## Week 9 – <2026-04-16>
+
+### Lidar Sensor – Config Verification (R2)
+
+Lidar sensor added and enabled in the active robot config:
+
+- **Config file:** `sdk/client/sim_config/robot_quadrotor_fastphysics.jsonc`
+- **Sensor ID:** `Lidar1`
+- **Type:** `lidar`
+- **Enabled:** `true`
+- **Channels:** 16
+- **Range:** 100 m
+- **FOV:** 360° horizontal, +15° to -90° vertical
+- **Mounted at:** `xyz: 0 0 0.2` on the Frame link
+
+All roles (R4, R5) must reference the sensor as `"Lidar1"` when accessing `drone.sensors["Lidar1"]["lidar"]`.
+
+### Validation
+
+- [ ] Lidar1 appears in drone sensor topic list on startup (editor)
+- [ ] Lidar1 topic streams point cloud data during flight (editor)
+- [ ] Lidar1 confirmed streaming in packaged build

@@ -519,6 +519,27 @@
         "xyz": "0 0 0",
         "rpy-deg": "0 -90 0"
       }
+    },
+    {
+      "id": "Lidar1",
+      "type": "lidar",
+      "enabled": true,
+      "parent-link": "Frame",
+      "number-of-channels": 16,
+      "range": 100,
+      "points-per-second": 100000,
+      "horizontal-rotation-frequency": 10,
+      "horizontal-fov-start-deg": 0.0,
+      "horizontal-fov-end-deg": 360.0,
+      "vertical-fov-upper-deg": 15.0,
+      "vertical-fov-lower-deg": -90.0,
+      "draw-debug-points": false,
+      "report-no-return-points": true,
+      "report-frequency": 0,
+      "origin": {
+        "xyz": "0 0 0.2",
+        "rpy-deg": "0 0 0"
+      }
     }
   ]
 }
