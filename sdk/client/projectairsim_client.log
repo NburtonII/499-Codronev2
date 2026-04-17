@@ -1,178 +1,81 @@
-18:07:50:712 [INFO] Connecting to simulation server at 127.0.0.1
-18:07:50:718 [INFO] Connection opened.
-18:07:50:720 [INFO] Started the pub-sub topic receiving thread.
-18:07:50:721 [INFO] Loading scene config: C:\Users\Ncburton\Desktop\499-Codrone-Sim\sdk\client\sim_config\BasicArenaDrone.jsonc
-18:07:51:616 [INFO] Getting the list of available topic info from the sim server...
-18:07:51:635 [INFO] Successfully received topic info list.
-18:07:53:645 [INFO] World object updated for the loaded scene '/Sim/SceneBasicDrone'. Note: Any previous Drone object instances may no longer be valid.
-18:07:53:646 [INFO] Trajectory 'null_trajectory' imported successfully.
-18:07:53:647 [INFO] Initalizing Drone 'Drone1'...
-18:07:53:648 [INFO] -------------------------------------------------
-18:07:53:648 [INFO] The following topics can be subscribed to for robot 'Drone1':
-18:07:53:649 [INFO]     sensors["lidar1"]["lidar"]
-18:07:53:649 [INFO]     sensors["Chase"]["scene_camera"]
-18:07:53:650 [INFO]     sensors["Chase"]["scene_camera_info"]
-18:07:53:650 [INFO]     sensors["DownCamera"]["scene_camera"]
-18:07:53:651 [INFO]     sensors["DownCamera"]["scene_camera_info"]
-18:07:53:651 [INFO]     sensors["DownCamera"]["depth_camera"]
-18:07:53:651 [INFO]     sensors["DownCamera"]["depth_camera_info"]
-18:07:53:652 [INFO]     sensors["IMU1"]["imu_kinematics"]
-18:07:53:653 [INFO]     sensors["GPS"]["gps"]
-18:07:53:653 [INFO]     sensors["Barometer"]["barometer"]
-18:07:53:654 [INFO]     sensors["Magnetometer"]["magnetometer"]
-18:07:53:654 [INFO]     sensors["FrontRange"]["distance_sensor"]
-18:07:53:656 [INFO]     sensors["BottomRange"]["distance_sensor"]
-18:07:53:656 [INFO]     robot_info["actual_pose"]
-18:07:53:657 [INFO]     robot_info["collision_info"]
-18:07:53:657 [INFO]     robot_info["rotor_info"]
-18:07:53:657 [INFO] -------------------------------------------------
-18:07:53:658 [INFO] Drone 'Drone1' initialized for World scene '/Sim/SceneBasicDrone'
-18:07:53:661 [INFO] Connected to AirSim with run number: 51
-18:07:53:669 [INFO] Welcome to to Class 499's Codrone Simulator!
+16:16:15:325 [INFO] Connecting to simulation server at 127.0.0.1
+16:16:15:339 [INFO] Connection opened.
+16:16:15:345 [INFO] Started the pub-sub topic receiving thread.
+16:16:15:345 [INFO] Loading scene config: C:\Users\Ncburton\Desktop\499-Codrone-Sim\sdk\client\sim_config\BasicArenaDrone.jsonc
+16:16:16:053 [INFO] Getting the list of available topic info from the sim server...
+16:16:16:070 [INFO] Successfully received topic info list.
+16:16:18:083 [INFO] World object updated for the loaded scene '/Sim/SceneBasicDrone'. Note: Any previous Drone object instances may no longer be valid.
+16:16:18:085 [INFO] Trajectory 'null_trajectory' imported successfully.
+16:16:18:085 [INFO] Initalizing Drone 'Drone1'...
+16:16:18:086 [INFO] -------------------------------------------------
+16:16:18:087 [INFO] The following topics can be subscribed to for robot 'Drone1':
+16:16:18:087 [INFO]     sensors["lidar1"]["lidar"]
+16:16:18:088 [INFO]     sensors["Chase"]["scene_camera"]
+16:16:18:089 [INFO]     sensors["Chase"]["scene_camera_info"]
+16:16:18:092 [INFO]     sensors["DownCamera"]["scene_camera"]
+16:16:18:093 [INFO]     sensors["DownCamera"]["scene_camera_info"]
+16:16:18:093 [INFO]     sensors["DownCamera"]["depth_camera"]
+16:16:18:094 [INFO]     sensors["DownCamera"]["depth_camera_info"]
+16:16:18:095 [INFO]     sensors["IMU1"]["imu_kinematics"]
+16:16:18:095 [INFO]     sensors["GPS"]["gps"]
+16:16:18:095 [INFO]     sensors["Barometer"]["barometer"]
+16:16:18:096 [INFO]     sensors["Magnetometer"]["magnetometer"]
+16:16:18:097 [INFO]     sensors["FrontRange"]["distance_sensor"]
+16:16:18:097 [INFO]     sensors["BottomRange"]["distance_sensor"]
+16:16:18:098 [INFO]     robot_info["actual_pose"]
+16:16:18:098 [INFO]     robot_info["collision_info"]
+16:16:18:099 [INFO]     robot_info["rotor_info"]
+16:16:18:099 [INFO] -------------------------------------------------
+16:16:18:100 [INFO] Drone 'Drone1' initialized for World scene '/Sim/SceneBasicDrone'
+16:16:18:108 [INFO] Connected to AirSim with run number: 74
+16:16:18:124 [INFO] Welcome to to Class 499's Codrone Simulator!
  We will begin the connecting process now.
-18:07:53:670 [INFO] Valid Commands: 
-18:07:53:670 [INFO] Reset
-18:07:53:671 [INFO] Close
-18:07:53:671 [INFO] Takeoff
-18:07:53:671 [INFO] State_Polling
-18:07:53:672 [INFO] Land
-18:07:53:672 [INFO] Forward
-18:07:53:672 [INFO] Backward
-18:07:53:672 [INFO] Left
-18:07:53:672 [INFO] Right
-18:07:53:673 [INFO] Up
-18:07:53:673 [INFO] Down
-18:07:53:673 [INFO] Yaw_Left
-18:07:53:673 [INFO] Yaw_Right
-18:07:53:674 [INFO] Square
-18:07:53:674 [INFO] 
+16:16:18:124 [INFO] Valid Commands: 
+16:16:18:124 [INFO] Reset
+16:16:18:125 [INFO] Close
+16:16:18:125 [INFO] Takeoff
+16:16:18:127 [INFO] State_Polling
+16:16:18:127 [INFO] Land
+16:16:18:127 [INFO] Forward
+16:16:18:127 [INFO] Backward
+16:16:18:127 [INFO] Left
+16:16:18:128 [INFO] Right
+16:16:18:128 [INFO] Up
+16:16:18:129 [INFO] Down
+16:16:18:130 [INFO] Yaw_Left
+16:16:18:130 [INFO] Yaw_Right
+16:16:18:131 [INFO] Square
+16:16:18:131 [INFO] 
 
-18:08:01:144 [INFO] takeoff_async: starting
-18:08:04:079 [INFO] takeoff_async: completed
-18:08:04:582 [INFO] Drone State at Wed Apr 15 18:08:04 2026:
-  Position  -> N: -0.000, E: -0.000, D: -1.613
+16:16:22:347 [INFO] takeoff_async: starting
+16:16:25:252 [INFO] takeoff_async: completed
+16:16:25:743 [INFO] Drone State at Thu Apr 16 16:16:25 2026:
+  Position  -> N: -0.000, E: -0.000, D: -1.564
   Orientation -> W: 1.000, X: 0.000, Y: 0.000, Z: 0.000
-Lidar Zones -> Forward:infm, Right :infm, Left  :infm, Above :infm, Below :infm
+Lidar Zones -> Forward:2.10m, Right :0.43m, Left  :0.43m, Above :0.43m, Below :0.43m
 
-18:08:47:559 [INFO] Valid Commands: 
-18:08:47:560 [INFO] Reset
-18:08:47:560 [INFO] Close
-18:08:47:561 [INFO] Takeoff
-18:08:47:561 [INFO] State_Polling
-18:08:47:562 [INFO] Land
-18:08:47:562 [INFO] Forward
-18:08:47:562 [INFO] Backward
-18:08:47:563 [INFO] Left
-18:08:47:563 [INFO] Right
-18:08:47:563 [INFO] Up
-18:08:47:563 [INFO] Down
-18:08:47:564 [INFO] Yaw_Left
-18:08:47:564 [INFO] Yaw_Right
-18:08:47:565 [INFO] Square
-18:08:47:565 [INFO] 
+16:16:28:340 [INFO] Valid Commands: 
+16:16:28:341 [INFO] Reset
+16:16:28:341 [INFO] Close
+16:16:28:341 [INFO] Takeoff
+16:16:28:342 [INFO] State_Polling
+16:16:28:342 [INFO] Land
+16:16:28:342 [INFO] Forward
+16:16:28:342 [INFO] Backward
+16:16:28:342 [INFO] Left
+16:16:28:343 [INFO] Right
+16:16:28:343 [INFO] Up
+16:16:28:343 [INFO] Down
+16:16:28:343 [INFO] Yaw_Left
+16:16:28:344 [INFO] Yaw_Right
+16:16:28:344 [INFO] Square
+16:16:28:345 [INFO] 
 
-18:08:59:320 [ERROR] Invalid command format. Please enter a command in the format 'Command(Duration in seconds)'. For example: 'Takeoff()' or 'State_Polling(5)'.
-18:08:59:320 [INFO] Valid Commands: 
-18:08:59:320 [INFO] Reset
-18:08:59:321 [INFO] Close
-18:08:59:321 [INFO] Takeoff
-18:08:59:321 [INFO] State_Polling
-18:08:59:321 [INFO] Land
-18:08:59:321 [INFO] Forward
-18:08:59:322 [INFO] Backward
-18:08:59:322 [INFO] Left
-18:08:59:322 [INFO] Right
-18:08:59:322 [INFO] Up
-18:08:59:322 [INFO] Down
-18:08:59:322 [INFO] Yaw_Left
-18:08:59:323 [INFO] Yaw_Right
-18:08:59:323 [INFO] Square
-18:08:59:323 [INFO] 
-
-18:09:05:192 [INFO] Move-Right Invoked
-18:09:06:232 [INFO] Move-Right Completed
-18:09:06:724 [INFO] Drone State at Wed Apr 15 18:09:06 2026:
-  Position  -> N: -0.000, E: 1.892, D: -2.560
-  Orientation -> W: 0.993, X: 0.118, Y: -0.000, Z: -0.000
-Lidar Zones -> Forward:infm, Right :infm, Left  :infm, Above :infm, Below :infm
-
-18:09:14:431 [INFO] Valid Commands: 
-18:09:14:432 [INFO] Reset
-18:09:14:432 [INFO] Close
-18:09:14:433 [INFO] Takeoff
-18:09:14:434 [INFO] State_Polling
-18:09:14:434 [INFO] Land
-18:09:14:434 [INFO] Forward
-18:09:14:435 [INFO] Backward
-18:09:14:435 [INFO] Left
-18:09:14:435 [INFO] Right
-18:09:14:435 [INFO] Up
-18:09:14:436 [INFO] Down
-18:09:14:436 [INFO] Yaw_Left
-18:09:14:436 [INFO] Yaw_Right
-18:09:14:436 [INFO] Square
-18:09:14:438 [INFO] 
-
-18:09:25:071 [INFO] Move-Right Invoked
-18:09:29:206 [INFO] Move-Right Completed
-18:09:29:698 [INFO] Drone State at Wed Apr 15 18:09:29 2026:
-  Position  -> N: 0.000, E: 17.676, D: -3.661
-  Orientation -> W: 1.000, X: 0.005, Y: 0.000, Z: -0.000
-Lidar Zones -> Forward:infm, Right :infm, Left  :infm, Above :infm, Below :infm
-
-18:09:32:744 [INFO] Valid Commands: 
-18:09:32:744 [INFO] Reset
-18:09:32:745 [INFO] Close
-18:09:32:745 [INFO] Takeoff
-18:09:32:745 [INFO] State_Polling
-18:09:32:745 [INFO] Land
-18:09:32:745 [INFO] Forward
-18:09:32:745 [INFO] Backward
-18:09:32:746 [INFO] Left
-18:09:32:746 [INFO] Right
-18:09:32:747 [INFO] Up
-18:09:32:747 [INFO] Down
-18:09:32:747 [INFO] Yaw_Left
-18:09:32:747 [INFO] Yaw_Right
-18:09:32:748 [INFO] Square
-18:09:32:748 [INFO] 
-
-18:09:37:143 [INFO] Move-Right Invoked
-18:09:47:510 [INFO] Move-Right Completed
-18:09:48:016 [INFO] Drone State at Wed Apr 15 18:09:48 2026:
-  Position  -> N: 0.000, E: 63.006, D: -4.808
-  Orientation -> W: 1.000, X: 0.004, Y: 0.000, Z: -0.000
-Lidar Zones -> Forward:infm, Right :infm, Left  :infm, Above :infm, Below :infm
-
-18:09:52:774 [INFO] Valid Commands: 
-18:09:52:775 [INFO] Reset
-18:09:52:776 [INFO] Close
-18:09:52:777 [INFO] Takeoff
-18:09:52:777 [INFO] State_Polling
-18:09:52:777 [INFO] Land
-18:09:52:777 [INFO] Forward
-18:09:52:777 [INFO] Backward
-18:09:52:779 [INFO] Left
-18:09:52:779 [INFO] Right
-18:09:52:779 [INFO] Up
-18:09:52:779 [INFO] Down
-18:09:52:780 [INFO] Yaw_Left
-18:09:52:780 [INFO] Yaw_Right
-18:09:52:780 [INFO] Square
-18:09:52:781 [INFO] 
-
-18:09:58:799 [INFO] Move-Forward Invoked
-18:10:19:081 [INFO] Move-Forward Completed
-18:10:19:576 [INFO] Drone State at Wed Apr 15 18:10:19 2026:
-  Position  -> N: 82.324, E: 63.352, D: -5.909
-  Orientation -> W: 0.985, X: -0.006, Y: -0.155, Z: -0.071
-Lidar Zones -> Forward:infm, Right :infm, Left  :infm, Above :infm, Below :infm
-
-18:10:46:438 [INFO] Closing User Control
-18:10:46:438 [INFO] Run number 51, has been closed and saved. Thank you.
-18:10:46:440 [INFO] Disconnecting from simulation server...
-18:10:46:474 [INFO] Disconnected.
-18:10:46:475 [INFO] User Control Closed Successfully.
-18:10:46:475 [INFO] Run number 52 has been closed and saved to C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunCommands\Run_51_Commands.csv and C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunTelemetry\Run_51_Telemetry.csv. Thank you.
-18:10:46:475 [INFO] Exiting Drone Control. Goodbye!
+16:16:32:115 [INFO] Move-Forward Invoked
+16:16:32:372 [WARNING] Obstacle detected within 0.00 meters ahead - triggering avoidance.
+16:17:25:869 [INFO] Move-Forward Completed
+16:17:26:366 [INFO] Drone State at Thu Apr 16 16:17:26 2026:
+  Position  -> N: 148.786, E: -0.001, D: -2.697
+  Orientation -> W: 0.973, X: -0.016, Y: -0.204, Z: 0.109
+Lidar Zones -> Forward:0.00m, Right :0.43m, Left  :0.43m, Above :0.00m, Below :0.00m
 

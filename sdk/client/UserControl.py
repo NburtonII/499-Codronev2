@@ -63,6 +63,9 @@ class UserControl:
         self.safeCollisionObjects = ["StaticMeshActor1"]
 
         ##setup for drone lidar
+        self.avoidance_active = False
+        self.abort_mission = False
+        self.Lidar_loop= None
         self.duration = duration
         self.num_points = 0
         self.is_start_time_initialized = False
@@ -170,7 +173,8 @@ class UserControl:
             self.drone.sensors["lidar1"]["lidar"],
             # Square Path
             lambda _, lidar_msg:self.lidar_callback(lidar_msg),
-        )    
+        )
+        self.Lidar_loop = asyncio.get_event_loop()    
 
     def _load_maps_config(self):
         maps_file = os.path.join(self.project_root, 'sdk', 'client', 'sim_config', 'maps_config.json')
@@ -261,7 +265,7 @@ class UserControl:
     def save_Command(self, command, Duration, status="ok", notes=""):
         current_Date = time.asctime(time.localtime())
         ##This will save the command to the run file and close it after the command is saved
-        ##Open Commadn file(Create if it doesnt exist)
+        ##Open Command file(Create if it doesnt exist)
         with open(self.CommandFilePath, 'a') as f:
             writer = csv.writer(f)
             writer.writerow([current_Date, command, Duration, status, notes])
@@ -348,11 +352,11 @@ class UserControl:
 
         Horizontal_distance = np.sqrt(x**2 + y**2)
 
-        FRONT_ANGLE = 30
+        FRONT_ANGLE = 15
         angle_deg =np.degrees(np.arctan2(y,x))
 
         zones = {
-            "forward":points[np.abs(angle_deg)< FRONT_ANGLE],
+            "forward":points[(np.abs(angle_deg)< FRONT_ANGLE)],
             "backward":points[np.abs(angle_deg)> 150],
             "right": points[(angle_deg > 30) & (angle_deg < 150)],
             "left": points[(angle_deg < -30 ) & (angle_deg > -150)],
@@ -364,23 +368,24 @@ class UserControl:
         for zone_name, zone_points in zones.items():
             if zone_points.shape[0] > 0:
                 dist = np.sqrt(
-                    np.sqrt(
                         zone_points[:,0]**2 + 
                         zone_points[:,1]**2 + 
                         zone_points[:,2]**2
                     )
-                )
                 min_distances[zone_name] = float(np.min(dist))
+                
             else:
                 min_distances[zone_name] = float('inf')
 
         return min_distances
     
     async def _avoid_obstacle(self):
+        print("Avoidance routine triggered")
         if not self.takeOff: 
             return
 
         projectairsim_log().warning("Avoidance: Stopping Movement")
+        self.abort_mission = True
         self.save_Event("avoidance_start", f"zones: {self.lidar_zones}" )
 
         try:
@@ -402,14 +407,17 @@ class UserControl:
                 projectairsim_log().info("AVOIDANCE: Path is clear on the right ")
                 avoid_right = await self.move_Drone(eastVelocity=2.0, duration=1.0)
                 await  avoid_right
+        
             elif zones.get("left", 0) > SAFE:
                 projectairsim_log().info("AVOIDANCE: Path is clear on the left ")
                 avoid_left = await self.move_Drone(eastVelocity=-2.0, duration=1.0)
                 await  avoid_left
+            
             elif zones.get("above", 0) > SAFE:
                 projectairsim_log().info("AVOIDANCE: Path is clear on the above ")
                 avoid_above = await self.move_Drone(upVelocity=-2.0, duration=1.0)
                 await  avoid_above
+                
             else:
                 projectairsim_log().warning("AVOIDANCE: No clear path detected, Emergency landing initiated.")
                 self.save_Event("avoidance_failure", "No clear path detected, initiating emergency landing.")
@@ -417,11 +425,15 @@ class UserControl:
         except Exception as e:
             projectairsim_log().error(f"Avoidance: failed to move drone — {e}")
 
+        finally:
+            self.abort_mission = False
+            self.avoidance_active = False
+
 
     def lidar_callback(self, lidar_data):
-        if lidar_data is None or self.lidar_zones is None:
+        if lidar_data is None:
             return
-        
+
         if not self.is_start_time_initialized:
             self.start_time = time.time()
             self.start_simTime = lidar_data["time_stamp"]
@@ -440,11 +452,16 @@ class UserControl:
 
         if(self.lidar_zones and self.takeOff):
             forward_dist = self.lidar_zones.get("forward", float('inf'))
-            if forward_dist < self.Obstacle_detection_threshold:
+            if forward_dist < self.Obstacle_detection_threshold and not self.avoidance_active :
                 projectairsim_log().warning(f"Obstacle detected within {forward_dist:.2f} meters ahead - triggering avoidance.")
-                self.save_event('Obstacle_Detected', f"Forward obstacle at {forward_dist:.2f} m")
-                loop = asyncio.get_event_loop()
-                loop.call_soon_threadsafe(lambda: asyncio.ensure_future(self._avoid_obstacle()))
+                self.save_Event('Obstacle_Detected', f"Forward obstacle at {forward_dist:.2f} m")
+                self.avoidance_active = True
+                if hasattr(self, "lidar_loop"):
+                    self.lidar_loop.call_soon_threadsafe(
+                        lambda: asyncio.create_task(self._avoid_obstacle())
+                    )
+                # loop = asyncio.get_event_loop()
+                # loop.call_soon_threadsafe(lambda: asyncio.ensure_future(self._avoid_obstacle()))
         elapsed = time.time() - self.start_time
         # projectairsim_log().info(
         #     f"Received {points.shape[0]} Points | "
@@ -460,14 +477,19 @@ class UserControl:
     def detect_Obstacle(points, threshold = 5.0):
         distances = np.linalg.norm(points, axis=1)
         return np.any(distances < threshold)
+    
+
     async def move_Drone(self, downVelocity = 0, northVelocity = 0, eastVelocity = 0, duration=5.0):
-        move_down_task = await self.drone.move_by_velocity_async(
-                            v_north=northVelocity, 
-                            v_east=eastVelocity, 
-                            v_down=downVelocity, 
-                            duration=duration
-                        )
-        await move_down_task
+        for _ in range(int(duration*10)):
+            if self.abort_mission == True:
+                break
+            move_task = await self.drone.move_by_velocity_async(
+                        v_north=northVelocity, 
+                        v_east=eastVelocity, 
+                        v_down=downVelocity, 
+                        duration=0.1
+                    )
+            await move_task
     
     async def commandParse(self, com, dur):
         ## Commands to be implemented "Forward, backward, left, up, down, right, yaw_left, yaw_right, hover, pitch_foward, pitch_back, roll_left, roll_right"
@@ -575,7 +597,7 @@ class UserControl:
                         projectairsim_log().info("Move-Right Completed")
                     elif com == "Up":
                         projectairsim_log().info("Move-Up Invoked")
-                        self.move_Drone(downVelocity=-velocity, duration=dur)
+                        await self.move_Drone(downVelocity=-velocity, duration=dur)
                         projectairsim_log().info("Move-Up Completed")
                     elif com == "Down":
                         projectairsim_log().info("Move-Down Invoked")

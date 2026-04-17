@@ -1,0 +1,3 @@
+timestamp,event_type,details
+Thu Apr 16 15:36:26 2026,run_start,"map:BasicArena,run:62"
+Thu Apr 16 15:36:32 2026,Obstacle_Detected,Forward obstacle at 1.46 m
