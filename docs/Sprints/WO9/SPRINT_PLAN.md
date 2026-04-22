@@ -44,7 +44,7 @@ Evidence: tests/TestDocs/Graphics_settings.md
 ##### Task 1: Place a Wall or Obstacle at a Known Distance from Spawn
 
 Finished Criteria: At least one solid wall or obstacle is placed at a known, documented distance from the drone spawn point (e.g. 5 meters forward). The obstacle must have a solid mesh — not a trigger volume — so Lidar raycasts register a hit. The distance is recorded in docs/SCENES_GUIDE.md so the SDK team knows what stopping threshold to use in the lab script.
-Evidence: 
+Evidence:
   - Wall/obstacle is visible and present in the scene at the documented distance.
   - docs/SCENES_GUIDE.md updated with obstacle name and distance from spawn.
 
