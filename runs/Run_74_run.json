@@ -1,6 +1,6 @@
 {
   "run_number": 74,
-  "status": "connected",
+  "status": "closed",
   "map": "BasicArena",
   "commands_csv": "runs\\RunCommands\\Run_74_Commands.csv",
   "telemetry_csv": "runs\\RunTelemetry\\Run_74_Telemetry.csv",

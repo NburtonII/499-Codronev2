@@ -1,0 +1,6 @@
+timestamp,event_type,details
+Fri Apr 17 12:49:59 2026,run_start,"map:BasicArena,run:80"
+Fri Apr 17 12:50:06 2026,Obstacle_Detected,Forward obstacle at 0.00 m
+Fri Apr 17 12:50:06 2026,avoidance_start,"zones: {'forward': 0.0, 'backward': 1.3257789611816406, 'right': 0.3978850543498993, 'left': 0.39788496494293213, 'above': 0.0, 'below': 1.31589674949646}"
+Fri Apr 17 12:50:06 2026,avoidance_failure,"No clear path detected, initiating emergency landing."
+Fri Apr 17 12:52:09 2026,run_start,"map:BasicArena,run:80"

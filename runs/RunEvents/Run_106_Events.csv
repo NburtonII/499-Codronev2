@@ -1,0 +1,5 @@
+timestamp,event_type,details
+Wed Apr 22 17:07:19 2026,run_start,"map:BasicArena,run:106"
+Wed Apr 22 17:08:10 2026,Obstacle_Detected,Forward obstacle at 1.40 m
+Wed Apr 22 17:08:10 2026,avoidance_start,"zones: {'forward': 1.4032057985378037, 'backward': 9.027012561783197, 'right': 1.6222228745062668, 'left': 1.6245810665303106, 'above': 1.4032057985378037, 'below': 3.829914378617251}"
+Wed Apr 22 17:08:10 2026,Collision,"Collision Info: {'time_stamp': 52197000000, 'object_name': 'StaticMeshActor_5', 'segmentation_id': 83, 'position': {'x': 148.81727600097656, 'y': -1.8136475773644634e-05, 'z': -2.7232398986816406}, 'impact_point': {'x': 149.3199920654297, 'y': 5.303196303430013e-06, 'z': -2.754936456680298}, 'normal': {'x': -1, 'y': 3.422854177870249e-08, 'z': 0}, 'penetration_depth': 0}"

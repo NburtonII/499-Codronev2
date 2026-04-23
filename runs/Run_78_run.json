@@ -1,0 +1,9 @@
+{
+  "run_number": 78,
+  "status": "closed",
+  "map": "BasicArena",
+  "commands_csv": "runs\\RunCommands\\Run_78_Commands.csv",
+  "telemetry_csv": "runs\\RunTelemetry\\Run_78_Telemetry.csv",
+  "events_csv": "runs\\RunEvents\\Run_78_Events.csv",
+  "metrics_json": "runs/Run_78_metrics.json"
+}

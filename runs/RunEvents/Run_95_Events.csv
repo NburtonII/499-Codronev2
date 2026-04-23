@@ -1,0 +1,4 @@
+timestamp,event_type,details
+Fri Apr 17 13:36:37 2026,run_start,"map:BasicArena,run:95"
+Fri Apr 17 13:36:54 2026,Obstacle_Detected,Forward obstacle at 1.98 m
+Fri Apr 17 13:36:54 2026,avoidance_start,"zones: {'forward': 1.9775824546813965, 'backward': 48.44087600708008, 'right': 2.1558618545532227, 'left': 2.15500545501709, 'above': 1.9775824546813965, 'below': 3.865732192993164}"

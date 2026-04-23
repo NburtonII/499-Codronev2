@@ -26,7 +26,7 @@ These instructions assume a fresh install of everything.
 
 1. Make sure you install the following:
 
-    - Install Python 3.14, and
+    - Install Python 3.12, and
   
     - Unreal 5.7
 
@@ -57,8 +57,8 @@ git clone https://github.com/iamaisim/ProjectAirSim.git
 cd PathtoClone/sdk/ProjectAirSim
 set VSCMD_ARG_TGT_ARCH=x64
 set VSCMD_ARG_HOST_ARCH=x64
-set UE_ROOT="C:\Program Files\Epic Games\UE_5.7"
-build.cmd -Wno-dev simlib_release
+set "UE_ROOT=C:\Program Files\Epic Games\UE_5.7"
+build.cmd -Wno-dev simlibs_release
 ```
 NOTE: If you run into "The system cannot find the path specified" error, you could likely do the following:
 * Fix the vcvarsall.bat path in build.cmd
@@ -100,7 +100,7 @@ AFTER ALL THESE ARE DONE, YOU CAN THEN RE-RUN
 
 1. Once finished with the last step. Copy sdk/ProjectAirSim\unreal\Blocks\Plugins to the sim folder in the main directory. It is fine to replace the current plugins directory.
 
-2. Launch the unrela project in the sim directory. Click build when the unreal messages pop up. The system will be ready once finished.
+2. Launch the unreal project in the sim directory. Click build when the unreal messages pop up. The system will be ready once finished.
 
 ### Python SDK
 1. Navigate to the Python client directory

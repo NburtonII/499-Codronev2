@@ -1,0 +1,183 @@
+timestamp,event_type,details
+Fri Apr 17 13:09:23 2026,run_start,"map:BasicArena,run:89"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 1.79 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 1.790432333946228, 'backward': inf, 'right': inf, 'left': 1.9976896047592163, 'above': 1.790432333946228, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 1.69 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 1.6850135326385498, 'backward': inf, 'right': inf, 'left': inf, 'above': 1.6850135326385498, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 1.72 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 1.7248259782791138, 'backward': inf, 'right': 1.8969371318817139, 'left': inf, 'above': 1.7248259782791138, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 1.46 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 1.4572221040725708, 'backward': inf, 'right': inf, 'left': 1.4742896556854248, 'above': 1.4572221040725708, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 1.23 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 1.2252130508422852, 'backward': inf, 'right': inf, 'left': inf, 'above': 1.2252130508422852, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 1.18 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 1.1830358505249023, 'backward': inf, 'right': 1.3661564588546753, 'left': inf, 'above': 1.1830358505249023, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 0.81 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 0.8105995655059814, 'backward': inf, 'right': inf, 'left': 0.8692181706428528, 'above': 0.8105995655059814, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 0.72 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 0.7209179401397705, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.7209179401397705, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 0.67 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 0.673487663269043, 'backward': inf, 'right': 0.7675030827522278, 'left': inf, 'above': 0.673487663269043, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 0.27 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 0.270297646522522, 'backward': inf, 'right': inf, 'left': 0.3015868365764618, 'above': 0.270297646522522, 'below': inf}"
+Fri Apr 17 13:10:31 2026,Obstacle_Detected,Forward obstacle at 0.22 m
+Fri Apr 17 13:10:31 2026,avoidance_start,"zones: {'forward': 0.21660661697387695, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.21660661697387695, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.18 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.18095672130584717, 'backward': inf, 'right': 0.1990133672952652, 'left': inf, 'above': 0.18095672130584717, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.00 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.004774965811520815, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.004774965811520815, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.01 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.012132752686738968, 'backward': inf, 'right': 0.012982110492885113, 'left': inf, 'above': 0.012132752686738968, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.04 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.03727942332625389, 'backward': inf, 'right': inf, 'left': 0.04234747216105461, 'above': 0.03727942332625389, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.04 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.03515365719795227, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.03515365719795227, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.04 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.03775821626186371, 'backward': inf, 'right': 0.038334306329488754, 'left': inf, 'above': 0.03775821626186371, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.01 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.014533927664160728, 'backward': inf, 'right': inf, 'left': 0.016407599672675133, 'above': 0.014533927664160728, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.015224693343043327, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.015224693343043327, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.016388319432735443, 'backward': inf, 'right': 0.017087247222661972, 'left': inf, 'above': 0.016388319432735443, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.015235655009746552, 'backward': inf, 'right': inf, 'left': 0.017008965834975243, 'above': 0.015235655009746552, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.01 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01496887393295765, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.01496887393295765, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01595788076519966, 'backward': inf, 'right': 0.017020180821418762, 'left': inf, 'above': 0.01595788076519966, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.015004785731434822, 'backward': inf, 'right': inf, 'left': 0.017022060230374336, 'above': 0.015004785731434822, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.01 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.014968871138989925, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.014968871138989925, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01680527813732624, 'backward': inf, 'right': 0.01705935224890709, 'left': inf, 'above': 0.01680527813732624, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.018049076199531555, 'backward': inf, 'right': inf, 'left': 0.01823296770453453, 'above': 0.018049076199531555, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01611931622028351, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.01611931622028351, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01598704606294632, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.01598704606294632, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.017450330778956413, 'backward': inf, 'right': 0.018193742260336876, 'left': inf, 'above': 0.017450330778956413, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.016676699742674828, 'backward': inf, 'right': inf, 'left': 0.01894417591392994, 'above': 0.016676699742674828, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01762205921113491, 'backward': inf, 'right': 0.019990069791674614, 'left': inf, 'above': 0.01762205921113491, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01955808512866497, 'backward': inf, 'right': inf, 'left': 0.02030927501618862, 'above': 0.01955808512866497, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.017870303243398666, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.017870303243398666, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.0178272295743227, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.0178272295743227, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.01999819651246071, 'backward': inf, 'right': 0.02029881440103054, 'left': inf, 'above': 0.01999819651246071, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:32 2026,avoidance_start,"zones: {'forward': 0.019256852567195892, 'backward': inf, 'right': inf, 'left': 0.020870236679911613, 'above': 0.019256852567195892, 'below': inf}"
+Fri Apr 17 13:10:32 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.01836034283041954, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.01836034283041954, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.01839039847254753, 'backward': inf, 'right': 0.020844345912337303, 'left': inf, 'above': 0.01839039847254753, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019656674936413765, 'backward': inf, 'right': inf, 'left': 0.020894261077046394, 'above': 0.019656674936413765, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.01836053468286991, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.01836053468286991, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.018646501004695892, 'backward': inf, 'right': 0.020891547203063965, 'left': inf, 'above': 0.018646501004695892, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.020143112167716026, 'backward': inf, 'right': inf, 'left': 0.020900776609778404, 'above': 0.020143112167716026, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.018360387533903122, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.018360387533903122, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.018485836684703827, 'backward': inf, 'right': 0.020867526531219482, 'left': inf, 'above': 0.018485836684703827, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019765738397836685, 'backward': inf, 'right': inf, 'left': 0.021421993151307106, 'above': 0.019765738397836685, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.018839210271835327, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.018839210271835327, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019367342814803123, 'backward': inf, 'right': 0.021348290145397186, 'left': inf, 'above': 0.019367342814803123, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.020633917301893234, 'backward': inf, 'right': inf, 'left': 0.021933000534772873, 'above': 0.020633917301893234, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.01926879957318306, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.01926879957318306, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.01956845261156559, 'backward': inf, 'right': 0.02191941998898983, 'left': inf, 'above': 0.01956845261156559, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019868850708007812, 'backward': inf, 'right': inf, 'left': 0.021873030811548233, 'above': 0.019868850708007812, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019264111295342445, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.019264111295342445, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.020122380927205086, 'backward': inf, 'right': 0.021852528676390648, 'left': inf, 'above': 0.020122380927205086, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.01984972134232521, 'backward': inf, 'right': inf, 'left': 0.022412175312638283, 'above': 0.01984972134232521, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019679639488458633, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.019679639488458633, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.02145574428141117, 'backward': inf, 'right': 0.02236407995223999, 'left': inf, 'above': 0.02145574428141117, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.01967303454875946, 'backward': inf, 'right': inf, 'left': 0.022348852828145027, 'above': 0.01967303454875946, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019671697169542313, 'backward': inf, 'right': 0.02230062708258629, 'left': inf, 'above': 0.019671697169542313, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019721563905477524, 'backward': inf, 'right': inf, 'left': 0.022373875603079796, 'above': 0.019721563905477524, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.019671833142638206, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.019671833142638206, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.022058773785829544, 'backward': inf, 'right': 0.02238916978240013, 'left': inf, 'above': 0.022058773785829544, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.021364767104387283, 'backward': inf, 'right': inf, 'left': 0.023153157904744148, 'above': 0.021364767104387283, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.020365430042147636, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.020365430042147636, 'below': inf}"
+Fri Apr 17 13:10:33 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:33 2026,avoidance_start,"zones: {'forward': 0.020933689549565315, 'backward': inf, 'right': 0.023068444803357124, 'left': inf, 'above': 0.020933689549565315, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.020731095224618912, 'backward': inf, 'right': inf, 'left': 0.023142848163843155, 'above': 0.020731095224618912, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02036532200872898, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.02036532200872898, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02169128507375717, 'backward': inf, 'right': 0.023120295256376266, 'left': inf, 'above': 0.02169128507375717, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.022343432530760765, 'backward': inf, 'right': inf, 'left': 0.02320006862282753, 'above': 0.022343432530760765, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.020365357398986816, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.020365357398986816, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02050255611538887, 'backward': inf, 'right': 0.023133182898163795, 'left': inf, 'above': 0.02050255611538887, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02165076695382595, 'backward': inf, 'right': inf, 'left': 0.024441972374916077, 'above': 0.02165076695382595, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.0212725643068552, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.0212725643068552, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02319103479385376, 'backward': inf, 'right': 0.024169674143195152, 'left': inf, 'above': 0.02319103479385376, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.021898599341511726, 'backward': inf, 'right': inf, 'left': 0.024516411125659943, 'above': 0.021898599341511726, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.021510107442736626, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.021510107442736626, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.023384422063827515, 'backward': inf, 'right': 0.024922778829932213, 'left': inf, 'above': 0.023384422063827515, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.022036083042621613, 'backward': inf, 'right': inf, 'left': 0.024993130937218666, 'above': 0.022036083042621613, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.021980924531817436, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.021980924531817436, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.024637529626488686, 'backward': inf, 'right': 0.025005539879202843, 'left': inf, 'above': 0.024637529626488686, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.024812694638967514, 'backward': inf, 'right': inf, 'left': 0.025064008310437202, 'above': 0.024812694638967514, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02198069542646408, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.02198069542646408, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.022016040980815887, 'backward': inf, 'right': 0.02493489906191826, 'left': inf, 'above': 0.022016040980815887, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.023529956117272377, 'backward': inf, 'right': inf, 'left': 0.025007231160998344, 'above': 0.023529956117272377, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.021980881690979004, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.021980881690979004, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02231953851878643, 'backward': inf, 'right': 0.024915684014558792, 'left': inf, 'above': 0.02231953851878643, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.022960321977734566, 'backward': inf, 'right': inf, 'left': 0.025268075987696648, 'above': 0.022960321977734566, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.02226300537586212, 'backward': inf, 'right': inf, 'left': inf, 'above': 0.02226300537586212, 'below': inf}"
+Fri Apr 17 13:10:34 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:34 2026,avoidance_start,"zones: {'forward': 0.023249803110957146, 'backward': inf, 'right': 0.02524058148264885, 'left': inf, 'above': 0.023249803110957146, 'below': inf}"
+Fri Apr 17 13:10:35 2026,Obstacle_Detected,Forward obstacle at 0.02 m
+Fri Apr 17 13:10:35 2026,avoidance_start,"zones: {'forward': 0.022464677691459656, 'backward': 85.32394409179688, 'right': 0.025528546422719955, 'left': 0.02548860013484955, 'above': 0.022464677691459656, 'below': 7.528538703918457}"
+Fri Apr 17 13:10:35 2026,avoidance_failure,"No clear path detected, initiating emergency landing."

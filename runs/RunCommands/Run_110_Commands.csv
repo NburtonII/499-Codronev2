@@ -1,0 +1,6 @@
+timestamp,command,duration_s,status,notes
+Wed Apr 22 17:18:57 2026,Takeoff,0,ok,
+Wed Apr 22 17:19:36 2026,Forward,100,ok,
+Thu Apr 23 15:23:19 2026,Takeoff,0,ok,
+Thu Apr 23 15:23:27 2026,Up,100,failed,'>' not supported between instances of 'dict' and 'int'
+Thu Apr 23 15:26:58 2026,Up,100,failed,'>' not supported between instances of 'dict' and 'int'

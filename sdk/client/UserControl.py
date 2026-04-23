@@ -7,6 +7,7 @@ import asyncio
 import math
 import numpy as np
 import threading
+from scipy.spatial.transform import Rotation
 
 from projectairsim import ProjectAirSimClient, Drone, World
 from projectairsim.utils import projectairsim_log
@@ -60,10 +61,13 @@ class UserControl:
         ##Drone Data
         self.latest_pose = None
         self.collision = False
-        self.safeCollisionObjects = ["StaticMeshActor1"]
+        self.collision_Count = 0
+        self.collision_objects = []
+        
 
         ##setup for drone lidar
         self.avoidance_active = False
+        self.last_avoidance_time = 0
         self.abort_mission = False
         self.Lidar_loop= None
         self.duration = duration
@@ -79,7 +83,7 @@ class UserControl:
         self.timer_thread = threading.Thread(
             target=self.repeat_timer_callback, args=(self.timer_callback, 0.1)
         )
-        self.Obstacle_detection_threshold = 2.0
+        self.Obstacle_detection_threshold = 3.0
         self.lidar_zones = None
         self.Kill_z_up = -100
         self.kill_z_down = 0.5
@@ -170,7 +174,7 @@ class UserControl:
         )
 
         self.client.subscribe(
-            self.drone.sensors["lidar1"]["lidar"],
+            self.drone.sensors["Lidar1"]["lidar"],
             # Square Path
             lambda _, lidar_msg:self.lidar_callback(lidar_msg),
         )
@@ -282,7 +286,7 @@ class UserControl:
                 telemetry_data['orientation']['x'],
                 telemetry_data['orientation']['y'],
                 telemetry_data['orientation']['z'],
-                self.collision,
+                self.collision_Count,
                 telemetry_data.get('front_range_cm', ""),
                 telemetry_data.get('bottom_range_cm', ""),
             ])
@@ -343,25 +347,33 @@ class UserControl:
     
     def parse_lidar_zones(self, points):
         ##parse lidar points into zones
-        if points.shape[0] == 0:
+        if points.shape[0] == 0 or self.latest_pose is None:
             return None
         
-        x = points[:,0] #North/South
-        y = points[:,1] #East/West
-        z = points[:,2] #Up/Down
+        orient = self.latest_pose.get("orientation", {})
+        q = [orient.get("x",0), orient.get("y",0),
+             orient.get("z", 0), orient.get("w",1)]
+        
+        r = Rotation.from_quat(q)
+        world_points = r.apply(points)
+
+        x = world_points[:,0] #North/South
+        y = world_points[:,1] #East/West
+        z = world_points[:,2] #Up/Down
 
         Horizontal_distance = np.sqrt(x**2 + y**2)
-
-        FRONT_ANGLE = 15
+        elevation_deg = np.degrees(np.arctan2(-z, Horizontal_distance))
+        FRONT_ANGLE = 30
+        
         angle_deg =np.degrees(np.arctan2(y,x))
 
         zones = {
-            "forward":points[(np.abs(angle_deg)< FRONT_ANGLE)],
-            "backward":points[np.abs(angle_deg)> 150],
-            "right": points[(angle_deg > 30) & (angle_deg < 150)],
-            "left": points[(angle_deg < -30 ) & (angle_deg > -150)],
-            "above": points[z > -0.5],
-            "below": points[z < 0.5]
+            "forward":world_points[(np.abs(angle_deg)< FRONT_ANGLE) &(np.abs(elevation_deg) < 20)],
+            "backward":world_points[np.abs(angle_deg)> 150],
+            "right": world_points[(angle_deg > 30) & (angle_deg < 150)],
+            "left": world_points[(angle_deg < -30 ) & (angle_deg > -150)],
+            "above": world_points[z < 11],
+            "below": world_points[z >  1]
         }
 
         min_distances = {}
@@ -379,6 +391,16 @@ class UserControl:
 
         return min_distances
     
+
+    async def Emergency_avoid( self ,northVelocity = 0,eastVelocity = 0,downVelocity = 0):
+        move_task = await self.drone.move_by_velocity_async(
+                    v_north=northVelocity, 
+                    v_east=eastVelocity, 
+                    v_down=downVelocity, 
+                    duration=1
+                )
+        await move_task
+
     async def _avoid_obstacle(self):
         print("Avoidance routine triggered")
         if not self.takeOff: 
@@ -389,8 +411,7 @@ class UserControl:
         self.save_Event("avoidance_start", f"zones: {self.lidar_zones}" )
 
         try:
-            stop = await self.move_Drone(downVelocity=0, northVelocity=0, eastVelocity=0, duration=1.0)
-            await stop
+            await self.Emergency_avoid(northVelocity=0, eastVelocity=0, downVelocity=0)
         except Exception as e:
             projectairsim_log().error(f"Avoidance: failed to stop drone movement — {e}")
             return  
@@ -405,18 +426,15 @@ class UserControl:
         try:
             if zones.get("right", 0) > SAFE:
                 projectairsim_log().info("AVOIDANCE: Path is clear on the right ")
-                avoid_right = await self.move_Drone(eastVelocity=2.0, duration=1.0)
-                await  avoid_right
+                await self.Emergency_avoid(eastVelocity=2.0,)
         
             elif zones.get("left", 0) > SAFE:
                 projectairsim_log().info("AVOIDANCE: Path is clear on the left ")
-                avoid_left = await self.move_Drone(eastVelocity=-2.0, duration=1.0)
-                await  avoid_left
+                await self.Emergency_avoid(eastVelocity=-2.0)
             
             elif zones.get("above", 0) > SAFE:
                 projectairsim_log().info("AVOIDANCE: Path is clear on the above ")
-                avoid_above = await self.move_Drone(upVelocity=-2.0, duration=1.0)
-                await  avoid_above
+                await self.Emergency_avoid(downVelocity=-2.0)
                 
             else:
                 projectairsim_log().warning("AVOIDANCE: No clear path detected, Emergency landing initiated.")
@@ -424,6 +442,9 @@ class UserControl:
                 await self._emergency_land()
         except Exception as e:
             projectairsim_log().error(f"Avoidance: failed to move drone — {e}")
+            projectairsim_log().warning("AVOIDANCE: No clear path detected, Emergency landing initiated.")
+            self.save_Event(f"avoidance_failure", "failed to move drone — {e}, Initiating emergency landing.")
+            await self._emergency_land()
 
         finally:
             self.abort_mission = False
@@ -431,9 +452,10 @@ class UserControl:
 
 
     def lidar_callback(self, lidar_data):
+        AVOIDANCE_COOLDOWN = 3.0
         if lidar_data is None:
             return
-
+        
         if not self.is_start_time_initialized:
             self.start_time = time.time()
             self.start_simTime = lidar_data["time_stamp"]
@@ -453,12 +475,16 @@ class UserControl:
         if(self.lidar_zones and self.takeOff):
             forward_dist = self.lidar_zones.get("forward", float('inf'))
             if forward_dist < self.Obstacle_detection_threshold and not self.avoidance_active :
+                if (time.time() - self.last_avoidance_time) < AVOIDANCE_COOLDOWN:
+                    return
+                print(self.last_avoidance_time)
+                self.last_avoidance_time = time.time()
                 projectairsim_log().warning(f"Obstacle detected within {forward_dist:.2f} meters ahead - triggering avoidance.")
                 self.save_Event('Obstacle_Detected', f"Forward obstacle at {forward_dist:.2f} m")
                 self.avoidance_active = True
-                if hasattr(self, "lidar_loop"):
-                    self.lidar_loop.call_soon_threadsafe(
-                        lambda: asyncio.create_task(self._avoid_obstacle())
+                if hasattr(self, "Lidar_loop"):
+                    self.Lidar_loop.call_soon_threadsafe(
+                        lambda: asyncio.run_coroutine_threadsafe(self._avoid_obstacle(), self.Lidar_loop)
                     )
                 # loop = asyncio.get_event_loop()
                 # loop.call_soon_threadsafe(lambda: asyncio.ensure_future(self._avoid_obstacle()))
@@ -483,6 +509,12 @@ class UserControl:
         for _ in range(int(duration*10)):
             if self.abort_mission == True:
                 break
+            
+            if self.latest_pose > self.Kill_z_up:
+                projectairsim_log().warning("Drone exceeded safe height. Stopping and landing drone.")
+                self._emergency_land()
+                break
+            
             move_task = await self.drone.move_by_velocity_async(
                         v_north=northVelocity, 
                         v_east=eastVelocity, 
@@ -509,12 +541,9 @@ class UserControl:
                         projectairsim_log().info("takeoff_async: starting")
                         takeoff_task = await self.drone.takeoff_async()
                         await takeoff_task
-                        self.timer_thread.start()
-                        print("Lidar Started: ", self.timer_thread.is_alive(),
-                              "\nTime: ", time.time() - self.start_time)
-                        
                         projectairsim_log().info("takeoff_async: completed")
                         self.takeOff = True
+                        self.timer_thread.start()
                         await self.statePoll(1)
                         # save after success so we know the command completed
                         self.save_Command(com, dur, status="ok", notes="")
@@ -620,25 +649,28 @@ class UserControl:
                 projectairsim_log().info("Square flight completed.")
                 await self.statePoll(1)
                 self.save_Command(com, dur, status="ok", notes="")
-                
-    def _on_collision(self, collision):
-        if not collision.get("has_collided", False):
-            return
-        
-        object_name = collision.get("object_name", "").lower()
-        position = collision.get("position", {})
+    
+    def _out_of_bounds(self):
+        pass
 
-        if object_name in self.safeCollisionObjects:
-            return
+    def _on_collision(self, collision):
         if not self.takeOff:
             return
-        projectairsim_log().warning(f"Collision detected with object: {object_name} at position: {position}. Initiating emergency landing.")
+        
         self.collision = True
-        self.save_Event("collision", f"object:{object_name},position:{position}")
-       
-        loop = asyncio.get_event_loop()
-        loop.call_soon_threadsafe(
-            lambda:asyncio.ensure_future(self._emergency_land()))
+        self.collision_Count += 1
+        self.collision_info = collision
+        self.Collision_info = collision
+        projectairsim_log().warning(f"Collision Detected! count:{self.collision_Count}. Emergency landing")
+        self.save_Event("Collision", f"Collision Info: {self.collision_info}")
+        if hasattr(self,"Lidar_loop"):
+            asyncio.run_coroutine_threadsafe(
+              self._emergency_land(),
+              self.Lidar_loop  
+            )
+        
+
+        
 
     async def _emergency_land(self):
         if not self.takeOff:
@@ -648,18 +680,11 @@ class UserControl:
         
         # Stop all movement first
         try:
-            stop_task = await self.drone.move_by_velocity_async(
-                v_north=0.0, v_east=0.0, v_down=0.0, duration=0.1
-            )
-            await stop_task
-        except Exception as e:
-            projectairsim_log().error(f"Failed to stop movement: {e}")
-
-        # Then land
-        try:
-            land_task = await self.drone.land_async()
-            await land_task
             self.takeOff = False
+            await self.move_Drone(downVelocity = 0, northVelocity = 0, eastVelocity = 0, duration=0)
+        # Then land
+            await self.drone.land_async()
+            
             projectairsim_log().info("Emergency land complete.")
         except Exception as e:
             projectairsim_log().error(f"Emergency land failed: {e}")     

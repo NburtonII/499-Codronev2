@@ -1,0 +1,6 @@
+timestamp,event_type,details
+Wed Apr 22 17:03:56 2026,run_start,"map:BasicArena,run:104"
+Wed Apr 22 17:04:46 2026,Obstacle_Detected,Forward obstacle at 2.90 m
+Wed Apr 22 17:04:46 2026,avoidance_start,"zones: {'forward': 2.901421708277103, 'backward': inf, 'right': inf, 'left': inf, 'above': 2.901421708277103, 'below': inf}"
+Wed Apr 22 17:04:47 2026,Collision,"Collision Info: {'time_stamp': 51954000000, 'object_name': 'StaticMeshActor_5', 'segmentation_id': 83, 'position': {'x': 148.82688903808594, 'y': -1.5632587746949866e-05, 'z': -3.6938533782958984}, 'impact_point': {'x': 149.3199920654297, 'y': 0.023841913789510727, 'z': -3.7936766147613525}, 'normal': {'x': -1, 'y': 3.473597587344557e-08, 'z': 0}, 'penetration_depth': 0}"
+Wed Apr 22 17:05:38 2026,avoidance_failure,"failed to move drone — {e}, Initiating emergency landing."
