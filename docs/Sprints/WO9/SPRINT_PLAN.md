@@ -2,13 +2,10 @@
 
 ## Introduction
 
-This Document outlines the sprint plan for week 9. Week 9 is about continuing to work on the Beta Build-up and running.
+This Document outlines the sprint plan for week 9. Week 9 is about continuing to work on the Beta Build-up and running. The sensor focus has shifted from color sensing to Lidar sensing.
 ### End of week Deliverables:
 
 1. Docs/Sprint/W09/*
-2. DOCS/presentations/W09
-
-
 
 ## Team Roles and Responsibilities
 
@@ -23,16 +20,7 @@ This Document outlines the sprint plan for week 9. Week 9 is about continuing to
 ##### Task 1 - Create Sprint tasks
 
 Finished Criteria: Document the tasks of each team member with appropriate, measurable evidence and finished criteria.
-Evidence: docs/Sprints/WO8/SPRINT_PLAN.md
-
-##### Task 2: Implementation of testing technologies
-
-Finished Criteria: Python and Unreal testing modules are at least implemented and added to the project. And some attempt to set up some basic automatic testing is made.
-Evidence:
-
-1. Python and Unreal test modules/libraries are a part of the project.
-
-2. docs/BUILD INFO/TEST_PLAN.md
+Evidence: docs/Sprints/WO9/SPRINT_PLAN.md
 
 ### Build Tasks
 
@@ -53,10 +41,12 @@ Evidence: tests/TestDocs/Graphics_settings.md
 
 ### World Tasks
 
-##### Task 1: Add three distinct color zones.
+##### Task 1: Place a Wall or Obstacle at a Known Distance from Spawn
 
-Finished Criteria: There are three color zones in each scene that are labeled.
-Evidence: The color zones are present, and the lighting does not interfere with the color detection of the drone.
+Finished Criteria: At least one solid wall or obstacle is placed at a known, documented distance from the drone spawn point (e.g. 5 meters forward). The obstacle must have a solid mesh — not a trigger volume — so Lidar raycasts register a hit. The distance is recorded in docs/SCENES_GUIDE.md so the SDK team knows what stopping threshold to use in the lab script.
+Evidence:
+  - Wall/obstacle is visible and present in the scene at the documented distance.
+  - docs/SCENES_GUIDE.md updated with obstacle name and distance from spawn.
 
 ##### Task 2: Camera Fixed
 
@@ -65,9 +55,14 @@ Evidence: When the build or editor is run, the camera does not clip through mesh
 
 ### API Tasks
 
-##### Story 1: Subscribe the drone to the proximity and color sensors
-
-Finished criteria: The simulated drone has sensors that detect proximity and color sensors, and it has associated behaviors to respond to its detection.
+##### Story 1:  Subscribe the Drone to the Lidar Sensor and Expose Distance Readings
+Finished criteria: 
+  - Lidar sensor ID is confirmed in the robot config and documented (e.g. Lidar1).
+  - range_sensor.py is updated to subscribe to the Lidar point cloud topic and extract                  front_lidar_cm and bottom_lidar_cm as numeric values in centimetres
+Protocol error is logged clearly if the Lidar sensor ID is not found in
+drone.sensors — consistent with the existing pattern for FrontRange
+and BottomRange.
+docs/PROTOCOL.md updated with the Lidar topic path and extraction method.
 Evidence: The drone can respond to commands to head toward a color landing pad and to avoid collision with an object.
 
 ##### Story 2: Drone accepts batch commands.
