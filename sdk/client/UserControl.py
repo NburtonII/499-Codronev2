@@ -63,6 +63,7 @@ class UserControl:
         self.latest_pose = None
         self.collision = False
         self.out_of_bounds = False
+        self.out_of_bounds = False
         self.collision_Count = 0
         self.collision_objects = []
         self.out_of_bounds = False
@@ -174,6 +175,7 @@ class UserControl:
         projectairsim_log().info(f"Connected to AirSim with run number: {self.runNumber}")    
         self.drone.enable_api_control()
         self.drone.arm()
+        self.out_of_bounds = False
         self.out_of_bounds = False
         self._ensure_log_headers()
         self._write_run_header()
@@ -355,6 +357,7 @@ class UserControl:
             self.drone.arm()
             self.takeOff = False
             self.collision = False
+            self.out_of_bounds = False
             self.out_of_bounds = False
             self.latest_pose = None
             projectairsim_log().info("resetSimulator: drone re-initialized. Ready to fly.")

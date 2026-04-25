@@ -1,155 +1,126 @@
-#!/usr/bin/env python3
-# tools/run_batch.py
-#
-# Run one or more mission JSON files in sequence and write runs/batch_summary.csv.
-# Creates a fresh controller connection for each mission so collision state resets cleanly.
-#
-# Usage:
-#   python tools/run_batch.py missions/first_flight.json missions/square_path.json
-#   python tools/run_batch.py --dir missions/
-#   python tools/run_batch.py missions/first_flight.json --repeat 50
-
 import argparse
 import asyncio
 import csv
-import os
 import sys
 from pathlib import Path
 
-_REPO_ROOT = Path(__file__).resolve().parent.parent
-SUMMARY_PATH = _REPO_ROOT / "runs" / "batch_summary.csv"
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SDK_CLIENT_DIR = REPO_ROOT / "sdk" / "client"
+
+if str(SDK_CLIENT_DIR) not in sys.path:
+    sys.path.insert(0, str(SDK_CLIENT_DIR))
+
+from batchCommands import connect_controller  # noqa: E402
+from mission_runner import load_mission, run_mission  # noqa: E402
 
 
-def _sdk_imports():
-    """Import SDK modules lazily so --help works without the simulator installed."""
-    sys.path.insert(0, str(_REPO_ROOT / "sdk" / "client"))
-    from UserControl import UserControl
-    from mission_runner import run_mission
-    return UserControl, run_mission
+DEFAULT_MAP_NAME = "BasicArena"
+DEFAULT_OUTPUT_PATH = REPO_ROOT / "runs" / "batch_summary.csv"
+SUMMARY_COLUMNS = [
+    "mission",
+    "success",
+    "completion_time_s",
+    "collisions",
+    "failure_reason",
+]
 
 
-FIELDNAMES = ["mission", "run_number", "success", "completion_time_s", "collisions", "failure_reason"]
-
-
-def _collect_missions(paths: list, repeat: int) -> list:
-    missions = []
-    for p in paths:
-        path = Path(p)
-        if path.is_dir():
-            missions.extend(sorted(path.glob("*.json")))
-        elif path.is_file():
-            missions.append(path)
-        else:
-            print(f"Warning: '{p}' not found — skipping.")
-    return missions * repeat
-
-
-async def _run_one(mission_path: Path) -> dict:
-    """Connect a fresh controller, run the mission, disconnect. Returns a result row."""
-    UserControl, run_mission = _sdk_imports()
-    controller = UserControl()
-    try:
-        controller.connect()
-    except Exception as e:
-        return {
-            "mission": mission_path.name,
-            "run_number": "?",
-            "success": False,
-            "completion_time_s": 0.0,
-            "collisions": 0,
-            "failure_reason": f"connect failed: {e}",
-        }
-
-    try:
-        metrics, _ = await run_mission(str(mission_path), controller)
-        return {
-            "mission": mission_path.name,
-            "run_number": controller.runNumber,
-            "success": metrics["success"],
-            "completion_time_s": metrics["completion_time_s"],
-            "collisions": metrics["collisions"],
-            "failure_reason": metrics.get("failure_reason") or "",
-        }
-    except Exception as e:
-        return {
-            "mission": mission_path.name,
-            "run_number": getattr(controller, "runNumber", "?"),
-            "success": False,
-            "completion_time_s": 0.0,
-            "collisions": 0,
-            "failure_reason": str(e),
-        }
-    finally:
-        controller.close()
-
-
-def _write_summary(results: list) -> None:
-    total = len(results)
-    successes = sum(1 for r in results if r["success"])
-    failures = total - successes
-    rate = (successes / total * 100) if total else 0.0
-
-    SUMMARY_PATH.parent.mkdir(exist_ok=True)
-    with open(SUMMARY_PATH, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
-        writer.writeheader()
-        writer.writerows(results)
-        # Summary rows at the bottom
-        f.write("\n")
-        f.write(f"TOTAL,{total},,,,\n")
-        f.write(f"SUCCESS,{successes},,,,\n")
-        f.write(f"FAILED,{failures},,,,\n")
-        f.write(f"SUCCESS_RATE,{rate:.1f}%,,,,\n")
-
-
-def _run_batch(missions: list) -> list:
-    results = []
-    for i, mission_path in enumerate(missions, 1):
-        print(f"[{i}/{len(missions)}] {mission_path.name} ...", end=" ", flush=True)
-        result = asyncio.run(_run_one(mission_path))
-        status = "PASS" if result["success"] else f"FAIL ({result['failure_reason']})"
-        print(f"{status}  ({result['completion_time_s']:.2f}s)")
-        results.append(result)
-    return results
-
-
-def main():
+def _parse_args(argv=None):
     parser = argparse.ArgumentParser(
-        description="Run mission JSON files in batch and write runs/batch_summary.csv."
+        description="Run multiple mission JSON files and write runs/batch_summary.csv.",
     )
-    parser.add_argument("missions", nargs="*", help="Mission JSON file paths")
-    parser.add_argument("--dir", help="Directory of mission JSON files to run")
     parser.add_argument(
-        "--repeat", type=int, default=1,
-        help="Repeat the full mission list N times (e.g. --repeat 50 for 50 trials)"
+        "missions",
+        nargs="+",
+        help="One or more mission JSON paths.",
     )
-    args = parser.parse_args()
+    parser.add_argument(
+        "--map",
+        default=DEFAULT_MAP_NAME,
+        help=f"Map name to use when connecting the simulator. Defaults to {DEFAULT_MAP_NAME}.",
+    )
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUTPUT_PATH),
+        help=f"Output CSV path. Defaults to {DEFAULT_OUTPUT_PATH}.",
+    )
+    return parser.parse_args(argv)
 
-    sources = list(args.missions)
-    if args.dir:
-        sources.append(args.dir)
-    if not sources:
-        parser.print_help()
-        return 1
 
-    missions = _collect_missions(sources, repeat=args.repeat)
-    if not missions:
-        print("No mission files found.")
-        return 1
+def _normalise_mission_paths(mission_args):
+    paths = []
+    for mission_arg in mission_args:
+        mission_path = Path(mission_arg)
+        if not mission_path.is_absolute():
+            mission_path = (Path.cwd() / mission_path).resolve()
+        paths.append(mission_path)
+    return paths
 
-    print(f"Starting batch: {len(missions)} run(s)...")
-    results = _run_batch(missions)
 
-    total = len(results)
-    successes = sum(1 for r in results if r["success"])
-    rate = (successes / total * 100) if total else 0.0
+def _format_success(value):
+    return "true" if value else "false"
 
-    _write_summary(results)
 
-    print(f"\nBatch complete: {successes}/{total} passed ({rate:.1f}%)")
-    print(f"Summary written to {SUMMARY_PATH}")
+def _format_failure_reason(value):
+    return "" if value in (None, "") else str(value)
 
-    return 0 if successes == total else 1
+
+def _write_summary(output_path, rows):
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    total_runs = len(rows)
+    success_count = sum(1 for row in rows if row["success"] == "true")
+    failure_count = total_runs - success_count
+    success_rate = (success_count / total_runs * 100.0) if total_runs else 0.0
+
+    with output_path.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=SUMMARY_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+        writer.writerow(
+            {
+                "mission": f"SUMMARY total_runs={total_runs}",
+                "success": f"success_count={success_count}",
+                "completion_time_s": f"failure_count={failure_count}",
+                "collisions": "",
+                "failure_reason": f"success_rate={success_rate:.2f}%",
+            }
+        )
+
+
+async def _run_batch(mission_paths, map_name):
+    rows = []
+
+    for mission_path in mission_paths:
+        load_mission(str(mission_path))
+        controller = connect_controller(map_name=map_name)
+        try:
+            metrics, _ = await run_mission(str(mission_path), controller)
+        finally:
+            controller.close()
+
+        rows.append(
+            {
+                "mission": mission_path.name,
+                "success": _format_success(metrics["success"]),
+                "completion_time_s": metrics["completion_time_s"],
+                "collisions": metrics["collisions"],
+                "failure_reason": _format_failure_reason(metrics.get("failure_reason")),
+            }
+        )
+
+    return rows
+
+
+def main(argv=None):
+    args = _parse_args(argv)
+    mission_paths = _normalise_mission_paths(args.missions)
+    rows = asyncio.run(_run_batch(mission_paths, map_name=args.map))
+    _write_summary(args.output, rows)
+    print(f"Wrote batch summary to {args.output}")
+    return 0
 
 
 if __name__ == "__main__":
