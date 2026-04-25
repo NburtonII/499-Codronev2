@@ -1,15 +1,15 @@
 # Metrics Specification
 
-**Version:** 1.0
-**Week:** 5
-**Owner:** R5 – Python SDK, QA & Documentation Engineer
+**Version:** 1.1
+**Weeks:** 5, 6, 10
+**Owner:** R5 - Python SDK, QA & Documentation Engineer
 
 ---
 
 ## Overview
 
-After each mission run, `run_mission()` in `sdk/client/mission_runner.py` automatically
-writes a `metrics.json` file capturing the outcome of the run.
+After each mission run, `run_mission()` in `sdk/client/mission_runner.py` writes a
+`metrics.json` file capturing the outcome of the run.
 
 ---
 
@@ -17,19 +17,20 @@ writes a `metrics.json` file capturing the outcome of the run.
 
 Metrics files follow the existing run-numbering convention in `runs/`:
 
-```
+```text
 runs/
-  Startup.json                       <- current run counter  {"RunNumber": N}
+  Startup.json                       <- current run counter {"RunNumber": N}
   RunCommands/Run_{N}_Commands.csv   <- command log for run N
   RunTelemetry/Run_{N}_Telemetry.csv <- telemetry log for run N
-  Run_{N}_metrics.json               <- mission metrics for run N  (Week 5+)
+  Run_{N}_metrics.json               <- mission metrics for run N
 ```
 
-`N` is read from `runs/Startup.json` at connect time and incremented by `controller.close()`.
+`N` is read from `runs/Startup.json` at connect time and incremented by
+`controller.close()`.
 
 ---
 
-## Week 5 Schema (minimum required fields)
+## Week 5 Minimum Schema
 
 ```json
 {
@@ -40,45 +41,18 @@ runs/
 }
 ```
 
-### Field definitions
+### Field Definitions
 
-| Field              | Type           | Required | Description                                                    |
-|--------------------|----------------|----------|----------------------------------------------------------------|
-| `success`          | bool           | **Yes**  | `true` if all steps completed without collision or exception   |
-| `completion_time_s`| float (>= 0)   | **Yes**  | Wall-clock seconds from first step start to last step end     |
-| `collisions`       | int (0 or 1)   | **Yes**  | `1` if a collision was detected during the mission, else `0`  |
-| `failure_reason`   | string or null | No       | Human-readable reason when `success` is `false`; null on pass |
-
----
-
-## Implementation Notes
-
-- **`collisions` is 0 or 1**, not a running count. The underlying
-  `UserControl._on_collision()` sets a boolean flag (`self.collision`), not a counter.
-  Multi-collision counting is planned for a future week.
-
-- **`completion_time_s`** is Python-side wall-clock time. It includes both command
-  execution time and time waiting for the simulator to respond.
-
-- **`failure_reason`** is set to `"collision"` if a collision terminates the mission
-  early, or to the exception message string if a Python exception is raised.
-  It is `null` on a successful run.
-
-- The `collision` flag is **not reset** by `resetDrone()` in the current implementation.
-  To get a clean `collisions: 0` on a repeat run, start a new session via `close()` +
-  reconnect. See `docs/RESET_PROCESS.md`.
+| Field               | Type | Required | Description |
+|---------------------|------|----------|-------------|
+| `success`           | bool | Yes | `true` if all steps completed without a mission-ending failure |
+| `completion_time_s` | float (>= 0) | Yes | Wall-clock seconds from first step start to last step end |
+| `collisions`      | int (0 or 1) | Yes | `1` if a collision was detected during the mission, else `0` |
+| `failure_reason` | string or null | No | Reason for mission failure; `null` on success |
 
 ---
 
-## Planned Additions (future weeks)
-
-| Field               | Planned week | Description                                 |
-|---------------------|--------------|---------------------------------------------|
-| structured failure codes | Week 10 | e.g. `collision`, `out_of_bounds`, `timeout`|
-
----
-
-## Week 6 Schema (full fields)
+## Week 6 Addition
 
 ```json
 {
@@ -90,28 +64,54 @@ runs/
 }
 ```
 
-### New Week 6 field
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `min_front_range_cm` | float (>= 0) or null | No | Minimum front range reading captured during the mission; `null` if no reading arrived |
 
-| Field               | Type              | Required | Description                                                         |
-|---------------------|-------------------|----------|---------------------------------------------------------------------|
-| `min_front_range_cm`| float (>= 0) or null | No   | Minimum FrontRange reading in cm during the run; null if no readings collected |
+---
 
-- **`min_front_range_cm`** is `null` if `get_front_range()` returned `None` for every
-  poll during the mission (e.g. sensor not connected, or very short mission with no
-  statePoll cycles).
-- Values are in **centimetres** (metres × 100) to match telemetry column units.
+## Week 10 Failure Reason Rules
+
+`failure_reason` now supports structured failure codes for the main mission-ending
+cases the SDK can identify directly:
+
+| Value | Meaning |
+|-------|---------|
+| `null` | Mission succeeded |
+| `"collision"` | `controller.collision` became `True` during the mission |
+| `"out_of_bounds"` | The controller reported an out-of-bounds condition |
+| `"timeout"` | A command failed with a timeout-style error message |
+| descriptive exception string | Any other unstructured Python or command failure |
+
+### Detection Rules
+
+- `mission_runner.run_mission()` checks controller state after each step.
+- If `controller.collision` is set, `failure_reason` becomes `"collision"`.
+- If `controller._out_of_bounds()` or `controller.out_of_bounds` reports an active
+  bounds violation, `failure_reason` becomes `"out_of_bounds"`.
+- If the last failed command note or raised exception contains `timeout` or
+  `timed out`, `failure_reason` becomes `"timeout"`.
+- Any other exception or failed-command note is written as its descriptive string.
+
+### Current Implementation Notes
+
+- `collisions` remains `0` or `1`, not a running count, to match the existing
+  metrics contract.
+- The current out-of-bounds signal is based on the SDK's safe altitude guard in
+  `UserControl.statePoll()`. More general map-boundary support may be added later
+  by the simulator/protocol layer.
+- `failure_reason` is only non-null when `success` is `false`.
 
 ---
 
 ## Validation
 
-`tests/test_metrics_schema_min.py` provides unit tests that validate any metrics dict
-against the Week 5 minimum schema without requiring a simulator connection.
+`tests/test_metrics_schema_min.py` validates the minimum schema and accepts both
+the Week 10 structured failure codes and descriptive strings.
 
-`tests/test_range_columns_present.py` provides unit tests that validate the Week 6
-metrics fields and telemetry columns.
+`tests/test_range_columns_present.py` validates the Week 6 range field additions.
 
-Run with:
+Run from the repo root:
 
 ```bash
 pytest tests/test_metrics_schema_min.py
