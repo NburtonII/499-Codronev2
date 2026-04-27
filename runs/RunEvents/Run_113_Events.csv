@@ -1,0 +1,6 @@
+timestamp,event_type,details
+Mon Apr 27 11:25:56 2026,run_start,"map:BasicArena,run:113"
+Mon Apr 27 11:26:50 2026,Obstacle_Detected,Forward obstacle at 1.89 m
+Mon Apr 27 11:26:50 2026,avoidance_start,"zones: {'forward': 1.8927201630258588, 'backward': 9.06756965283535, 'right': 2.191210603811223, 'left': 2.186713155196236, 'above': 1.8927201630258588, 'below': 3.824896327459049}"
+Mon Apr 27 11:26:50 2026,Collision,"Collision Info: {'time_stamp': 53343000000, 'object_name': 'StaticMeshActor_5', 'segmentation_id': 83, 'position': {'x': 148.85089111328125, 'y': -1.2518478797574062e-05, 'z': -3.0109312534332275}, 'impact_point': {'x': 149.3199920654297, 'y': -0.019596781581640244, 'z': -3.1927685737609863}, 'normal': {'x': -1, 'y': 3.372110768395942e-08, 'z': 0}, 'penetration_depth': 0}"
+Mon Apr 27 11:27:57 2026,Disconnect Error,Failed to land drone: 'Drone' object has no attribute 'land' 

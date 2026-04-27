@@ -84,7 +84,7 @@ class UserControl:
         self.timer_thread = threading.Thread(
             target=self.repeat_timer_callback, args=(self.timer_callback, 0.1)
         )
-        self.Obstacle_detection_threshold = 3.0
+        self.Obstacle_detection_threshold = 4.0
         self.lidar_zones = None
         self.Kill_z_up = -100
         self.kill_z_down = 0.5
