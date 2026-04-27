@@ -1,4 +1,105 @@
-15:23:06:953 [INFO] Connecting to simulation server at 127.0.0.1
-15:23:06:961 [INFO] Connection opened.
-15:23:06:961 [INFO] Started the pub-sub topic receiving thread.
-15:23:06:963 [INFO] Loading scene config: C:\Users\Ncburton\Desktop\499-Codrone-Sim\sdk\client\sim_config\BasicArenaDrone.jsonc
+15:53:20:663 [INFO] Connecting to simulation server at 127.0.0.1
+15:53:20:670 [INFO] Connection opened.
+15:53:20:671 [INFO] Started the pub-sub topic receiving thread.
+15:53:20:672 [INFO] Loading scene config: C:\Users\Ncburton\Desktop\499-Codrone-Sim\sdk\client\sim_config\BasicArenaDrone.jsonc
+15:53:21:628 [INFO] Getting the list of available topic info from the sim server...
+15:53:21:643 [INFO] Successfully received topic info list.
+15:53:23:650 [INFO] World object updated for the loaded scene '/Sim/SceneBasicDrone'. Note: Any previous Drone object instances may no longer be valid.
+15:53:23:653 [INFO] Trajectory 'null_trajectory' imported successfully.
+15:53:23:653 [INFO] Initalizing Drone 'Drone1'...
+15:53:23:654 [INFO] -------------------------------------------------
+15:53:23:655 [INFO] The following topics can be subscribed to for robot 'Drone1':
+15:53:23:655 [INFO]     sensors["lidar1"]["lidar"]
+15:53:23:657 [INFO]     sensors["Chase"]["scene_camera"]
+15:53:23:658 [INFO]     sensors["Chase"]["scene_camera_info"]
+15:53:23:660 [INFO]     sensors["DownCamera"]["scene_camera"]
+15:53:23:660 [INFO]     sensors["DownCamera"]["scene_camera_info"]
+15:53:23:660 [INFO]     sensors["DownCamera"]["depth_camera"]
+15:53:23:661 [INFO]     sensors["DownCamera"]["depth_camera_info"]
+15:53:23:661 [INFO]     sensors["IMU1"]["imu_kinematics"]
+15:53:23:662 [INFO]     sensors["GPS"]["gps"]
+15:53:23:663 [INFO]     sensors["Barometer"]["barometer"]
+15:53:23:664 [INFO]     sensors["Magnetometer"]["magnetometer"]
+15:53:23:665 [INFO]     sensors["FrontRange"]["distance_sensor"]
+15:53:23:665 [INFO]     sensors["BottomRange"]["distance_sensor"]
+15:53:23:666 [INFO]     sensors["Lidar1"]["lidar"]
+15:53:23:667 [INFO]     robot_info["actual_pose"]
+15:53:23:667 [INFO]     robot_info["collision_info"]
+15:53:23:668 [INFO]     robot_info["rotor_info"]
+15:53:23:669 [INFO] -------------------------------------------------
+15:53:23:669 [INFO] Drone 'Drone1' initialized for World scene '/Sim/SceneBasicDrone'
+15:53:23:675 [INFO] Connected to AirSim with run number: 111
+15:53:23:688 [INFO] Welcome to to Class 499's Codrone Simulator!
+ We will begin the connecting process now.
+15:53:23:689 [INFO] Valid Commands: 
+15:53:23:690 [INFO] Reset
+15:53:23:692 [INFO] Close
+15:53:23:692 [INFO] Takeoff
+15:53:23:693 [INFO] State_Polling
+15:53:23:693 [INFO] Land
+15:53:23:694 [INFO] Forward
+15:53:23:694 [INFO] Backward
+15:53:23:695 [INFO] Left
+15:53:23:695 [INFO] Right
+15:53:23:696 [INFO] Up
+15:53:23:696 [INFO] Down
+15:53:23:698 [INFO] Yaw_Left
+15:53:23:698 [INFO] Yaw_Right
+15:53:23:699 [INFO] Square
+15:53:23:701 [INFO] 
+
+15:53:26:126 [INFO] takeoff_async: starting
+15:53:29:091 [INFO] takeoff_async: completed
+15:53:29:590 [INFO] Drone State at Thu Apr 23 15:53:29 2026:
+  Position  -> N: -0.000, E: -0.000, D: -1.582
+  Orientation -> W: 1.000, X: 0.000, Y: 0.000, Z: 0.000
+Lidar Zones -> Forward:5.14m, Right :5.14m, Left  :5.14m, Above :5.14m, Below :5.14m
+
+15:53:32:316 [INFO] Valid Commands: 
+15:53:32:317 [INFO] Reset
+15:53:32:317 [INFO] Close
+15:53:32:318 [INFO] Takeoff
+15:53:32:318 [INFO] State_Polling
+15:53:32:318 [INFO] Land
+15:53:32:319 [INFO] Forward
+15:53:32:319 [INFO] Backward
+15:53:32:319 [INFO] Left
+15:53:32:320 [INFO] Right
+15:53:32:320 [INFO] Up
+15:53:32:320 [INFO] Down
+15:53:32:320 [INFO] Yaw_Left
+15:53:32:321 [INFO] Yaw_Right
+15:53:32:321 [INFO] Square
+15:53:32:321 [INFO] 
+
+15:53:35:373 [INFO] Move-Up Invoked
+15:53:56:494 [WARNING] Drone exceeded safe height. Stopping and landing drone.
+15:53:56:494 [WARNING] Emergency landing initiated.
+15:53:56:496 [INFO] Emergency land complete.
+15:53:56:496 [INFO] Move-Up Completed
+15:53:56:990 [WARNING] Drone has exceeded safe altitude limits (z=-100.443). Initiating emergency landing.
+15:58:56:992 [ERROR] Exception occurred for task '/Sim/SceneBasicDrone/robots/Drone1/Land': Timed out
+Traceback (most recent call last):
+  File "C:\Users\Ncburton\AppData\Local\Programs\Python\Python39\lib\site-packages\projectairsim\client.py", line 378, in postprocess_response_async_with_callback
+    response = await response
+  File "C:\Users\Ncburton\AppData\Local\Programs\Python\Python39\lib\site-packages\pynng\nng.py", line 1319, in arecv_msg
+    msg = await aio.arecv_msg()
+  File "C:\Users\Ncburton\AppData\Local\Programs\Python\Python39\lib\site-packages\pynng\_aio.py", line 192, in arecv_msg
+    await self.awaitable
+  File "C:\Users\Ncburton\AppData\Local\Programs\Python\Python39\lib\site-packages\pynng\_aio.py", line 80, in wait_for_aio
+    check_err(err)
+  File "C:\Users\Ncburton\AppData\Local\Programs\Python\Python39\lib\site-packages\pynng\exceptions.py", line 202, in check_err
+    raise exc(string, err)
+pynng.exceptions.Timeout: Timed out
+15:58:56:999 [INFO] Disconnecting from simulation server...
+15:58:57:022 [INFO] Disconnected.
+15:58:57:025 [ERROR] Error during emergency landing: Timed out
+16:02:59:127 [INFO] Closing User Control
+16:02:59:128 [INFO] Run number 111, has been closed and saved. Thank you.
+16:02:59:129 [INFO] Disconnecting from simulation server...
+16:02:59:130 [WARNING] Unable to unsubscribe from all topics.
+16:02:59:130 [INFO] Disconnected.
+16:02:59:131 [INFO] User Control Closed Successfully.
+16:02:59:132 [INFO] Run number 112 has been closed and saved to C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunCommands\Run_111_Commands.csv and C:\Users\Ncburton\Desktop\499-Codrone-Sim\runs\RunTelemetry\Run_111_Telemetry.csv. Thank you.
+16:02:59:132 [INFO] Exiting Drone Control. Goodbye!
+

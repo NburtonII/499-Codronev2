@@ -57,8 +57,9 @@ class UserControl:
         self.drone = None 
         self.current_map = "BasicArena"
         self.maps_config = None
-
+        self.errorMsg = None
         ##Drone Data
+        self.emergency_landing = False
         self.latest_pose = None
         self.collision = False
         self.collision_Count = 0
@@ -113,14 +114,18 @@ class UserControl:
                 os.chdir(os.path.join(self.project_root, "sdk", "client"))
                 self.world = World(self.client, scene_file, delay_after_load_sec=2)
             except Exception as e:
-                projectairsim_log().error(f"Error creating world: {e}")
+                self.errorMsg = f"Error creating world: {e}"
+                projectairsim_log().error(self.errorMsg)
+                self.save_Event("Connect Error",self.errorMsg)
 
             self.drone = Drone(self.client, self.world, "Drone1")
             self._subscribe_drone_topics()  # <-- replaces the two client.subscribe calls
             
         ###Read the set up file and get the run number.
         except Exception as e:
-            projectairsim_log().error(f"Error during connection and setup: {e}")    
+            self.errorMsg = f"Error during connection and setup: {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Connect Error",self.errorMsg)    
 
         try:
             with open(setupFile, 'r') as f:
@@ -132,11 +137,16 @@ class UserControl:
                     text = f.read()
                     m = re.search(r'"RunNumber"\s*:\s*(\d+)', text)
                     if m:
+                        self.errorMsg = "Startup.json malformed; recovered RunNumber from file."
                         setUpInfo = {"RunNumber": int(m.group(1))}
-                        projectairsim_log().warning("Startup.json malformed; recovered RunNumber from file.")
+                        projectairsim_log().warning(self.errorMsg)
+                        self.save_Event("Connect Error",self.errorMsg)
                     else:
+
                         setUpInfo = {"RunNumber": 0}
-                        projectairsim_log().warning("Startup.json malformed; defaulting RunNumber to 0.")
+                        self.errorMsg = "Startup.json malformed; defaulting RunNumber to 0."
+                        projectairsim_log().warning(self.errorMsg)
+                        self.save_Event("Connect Error",self.errorMsg)
 
             ##Get the current Run number (default to 0 if missing)
             self.runNumber = int(setUpInfo.get("RunNumber", 0))
@@ -151,9 +161,13 @@ class UserControl:
                 with open(setupFile, 'w') as f:
                     json.dump({"RunNumber": self.runNumber}, f)
             except Exception as e:
-                projectairsim_log().warning(f"Failed to normalize Startup.json: {e}")
+                self.errorMsg = f"Failed to normalize Startup.json: {e}"
+                projectairsim_log().warning(self.errorMsg)
+                self.save_Event("Connect Error",self.errorMsg)
         except Exception as e:
-            projectairsim_log().error(f"Error reading setup file: {e}")
+            self.errorMsg = f"Error reading setup file: {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Connect Error",self.errorMsg)
         ##Arm drone and let it be controlled through api
         projectairsim_log().info(f"Connected to AirSim with run number: {self.runNumber}")    
         self.drone.enable_api_control()
@@ -184,11 +198,9 @@ class UserControl:
         maps_file = os.path.join(self.project_root, 'sdk', 'client', 'sim_config', 'maps_config.json')
         if not os.path.exists(maps_file):
             self.maps_config = DEFAULT_MAPS_CONFIG.copy()
-            print('Debug: default map config: ',self.maps_config)
             return
         with open(maps_file, 'r') as f:
             self.maps_config = json.load(f)
-            print('Debug: MapChosen: ',self.maps_config)
 
     def _resolve_scene_config(self, scene_config):
         if os.path.isabs(scene_config):
@@ -310,8 +322,10 @@ class UserControl:
             try:
                 self.drone.disarm()
                 self.drone.disable_api_control()
-            except Exception:
-                pass
+            except Exception as e:
+                self.errorMsg = f"Reseting drone failed: {e}"
+                projectairsim_log().error(self.errorMsg)
+                self.save_Event("resetSimulator",self.errorMsg)
 
             # This is the actual sim-side reset message.
             # world.load_scene() calls client.request({ "method": "/Sim/LoadScene", ... })
@@ -323,8 +337,9 @@ class UserControl:
             projectairsim_log().info("resetSimulator: scene reloaded successfully.")
 
         except Exception as e:
-            projectairsim_log().error(f"resetSimulator: failed to reload scene — {e}")
-            return
+            self.errorMsg = f"resetSimulator: failed to reload scene — {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("resetSimulator",self.errorMsg)
 
         # Re-initialize the drone object against the fresh scene
         try:
@@ -337,7 +352,9 @@ class UserControl:
             self.latest_pose = None
             projectairsim_log().info("resetSimulator: drone re-initialized. Ready to fly.")
         except Exception as e:
-            projectairsim_log().error(f"resetSimulator: drone re-initialization failed — {e}")
+            self.errorMsg = f"drone re-initialization failed — {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Reset Simulation Error",self.errorMsg)
 
 
     def safe_division(self, x, y):
@@ -413,8 +430,10 @@ class UserControl:
         try:
             await self.Emergency_avoid(northVelocity=0, eastVelocity=0, downVelocity=0)
         except Exception as e:
-            projectairsim_log().error(f"Avoidance: failed to stop drone movement — {e}")
-            return  
+            self.errorMsg = f"failed to stop drone movement — {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Avoidance error",self.errorMsg)
+              
 
         await asyncio.sleep(0.5)
         if self.lidar_zones is None:
@@ -441,9 +460,10 @@ class UserControl:
                 self.save_Event("avoidance_failure", "No clear path detected, initiating emergency landing.")
                 await self._emergency_land()
         except Exception as e:
-            projectairsim_log().error(f"Avoidance: failed to move drone — {e}")
+            self.errorMsg = f"failed to move drone — {e}, Initiating emergency landing."
+            projectairsim_log().error(self.errorMsg)
             projectairsim_log().warning("AVOIDANCE: No clear path detected, Emergency landing initiated.")
-            self.save_Event(f"avoidance_failure", "failed to move drone — {e}, Initiating emergency landing.")
+            self.save_Event("avoidance_failure", self.errorMsg)
             await self._emergency_land()
 
         finally:
@@ -510,11 +530,11 @@ class UserControl:
             if self.abort_mission == True:
                 break
             
-            if self.latest_pose > self.Kill_z_up:
+            if self.latest_pose["position"]["z"] < self.Kill_z_up and not self.emergency_landing:
                 projectairsim_log().warning("Drone exceeded safe height. Stopping and landing drone.")
-                self._emergency_land()
+                await self._emergency_land()
                 break
-            
+
             move_task = await self.drone.move_by_velocity_async(
                         v_north=northVelocity, 
                         v_east=eastVelocity, 
@@ -548,9 +568,10 @@ class UserControl:
                         # save after success so we know the command completed
                         self.save_Command(com, dur, status="ok", notes="")
                     except Exception as e:
-                        projectairsim_log().error(f"takeoff_async: FAILED — {e}")
+                        self.errorMsg = f"takeoff Failed:{str(e)}"
+                        projectairsim_log().error(self.errorMsg)
                         self.save_Command(com, dur, status="failed", notes=str(e))
-                        self.save_Event("command_failure", f"takeoff:{str(e)}")
+                        self.save_Event("command_failure", self.errorMsg)
                         return
             elif com == "Land":
                 if not self.takeOff:
@@ -565,9 +586,10 @@ class UserControl:
                         await self.statePoll(1)
                         self.save_Command(com, dur, status="ok", notes="")
                     except Exception as e:
-                        projectairsim_log().error(f"land_async: FAILED — {e}")
+                        self.errorMsg = f"land_async: FAILED — {e}"
+                        projectairsim_log().error(self.errorMsg)
                         self.save_Command(com, dur, status="failed", notes=str(e))
-                        self.save_Event("command_failure", f"land:{str(e)}")
+                        self.save_Event("command_failure", self.errorMsg)
                         return
         elif com == "State_Polling":
             projectairsim_log().info("State Polling: Started")
@@ -597,9 +619,10 @@ class UserControl:
                     self.save_Command(com, dur, status="ok", notes="")
 
                 except Exception as e:
-                    projectairsim_log().error(f"{com}: FAILED — {e}")
+                    self.errorMsg = f"{com}: FAILED — {e}"
+                    projectairsim_log().error(self.errorMsg)
                     self.save_Command(com, dur, status="failed", notes=str(e))
-                    self.save_Event("command_failure", f"{com}:{str(e)}")
+                    self.save_Event("command_failure", self.errorMsg)
                     return
         elif com in ["Forward", "Backward", "Left", "Right", "Up", "Down"]:
             if not self.takeOff:
@@ -636,9 +659,10 @@ class UserControl:
                      # save once after all movement commands succeed
                     self.save_Command(com, dur, status="ok", notes="")
                 except Exception as e:
-                    projectairsim_log().error(f"{com}: FAILED — {e}")
+                    self.errorMsg = f"{com}: FAILED — {e}"
+                    projectairsim_log().error(self.errorMsg)
                     self.save_Command(com, dur, status="failed", notes=str(e))
-                    self.save_Event("command_failure", f"{com}:{str(e)}")
+                    self.save_Event("command_failure", self.errorMsg)
                     return
         elif com == "Square":
             if not self.takeOff:
@@ -658,6 +682,7 @@ class UserControl:
             return
         
         self.collision = True
+        self.emergency_landing = True
         self.collision_Count += 1
         self.collision_info = collision
         self.Collision_info = collision
@@ -681,13 +706,15 @@ class UserControl:
         # Stop all movement first
         try:
             self.takeOff = False
-            await self.move_Drone(downVelocity = 0, northVelocity = 0, eastVelocity = 0, duration=0)
+            await self.move_Drone(downVelocity = 0, northVelocity = 0, eastVelocity = 0, duration=0.2)
         # Then land
             await self.drone.land_async()
             
             projectairsim_log().info("Emergency land complete.")
         except Exception as e:
-            projectairsim_log().error(f"Emergency land failed: {e}")     
+            self.errorMsg = f"Emergency land failed: {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Emergency Land Failed",self.errorMsg)     
 
 
     async def statePoll(self,dur):
@@ -717,7 +744,9 @@ class UserControl:
                         await land_task
                         projectairsim_log().info("Emergency landing completed successfully.")
                     except Exception as e:
-                        projectairsim_log().error(f"Error during emergency landing: {e}")
+                        self.errorMsg = f"Error during emergency landing: {e}"
+                        projectairsim_log().error(self.errorMsg)
+                        self.save_Event("Emergency land Error", self.errorMsg)
                     break
                 projectairsim_log().info(
                     f"Drone State at {time.asctime(time.localtime())}:\n"
@@ -759,7 +788,9 @@ class UserControl:
                 command, duration = self.verify_Command(com)
                 self.commandContentVerification(command, duration)
             except Exception as e:
-                projectairsim_log().error(f"Error occurred while verifying command: {e}")
+                self.errorMsg = f"Error occurred while verifying command: {e}"
+                projectairsim_log().error(self.errorMsg)
+                self.save_Event("Command Verification Error", self.errorMsg)
                 return
             
 
@@ -814,12 +845,20 @@ class UserControl:
                     m = re.search(r'"RunNumber"\s*:\s*(\d+)', text)
                     if m:
                         setUpInfo = {"RunNumber": int(m.group(1))}
-                        projectairsim_log().warning("Startup.json malformed; recovered RunNumber from file during close.")
+                        self.errorMsg = "Startup.json malformed; recovered RunNumber from file during close."
+                        projectairsim_log().warning(self.errorMsg)
+                        self.save_Event("startup.json Failure", self.errorMsg )
                     else:
                         setUpInfo = {"RunNumber": self.runNumber if isinstance(self.runNumber, int) else 0}
-                        projectairsim_log().warning("Startup.json malformed; defaulting RunNumber during close.")
+                        self.errorMsg = "Startup.json malformed; defaulting RunNumber during close."
+                        projectairsim_log().warning(self.errorMsg)
+                        self.save_Event("startup.json Failure", self.errorMsg)
         except FileNotFoundError:
-            setUpInfo = {"RunNumber": self.runNumber if isinstance(self.runNumber, int) else 0}
+            tempRunNumber = self.runNumber if isinstance(self.runNumber, int) else 0
+            setUpInfo = {"RunNumber": tempRunNumber}
+            self.errorMsg = f"startup.json not found. starting run number at: {tempRunNumber}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("FileNotFoundError", self.errorMsg)
 
         # Increment the run number and persist a normalized Startup.json
         RunNumberIncrement = int(setUpInfo.get("RunNumber", 0)) + 1
@@ -828,23 +867,30 @@ class UserControl:
             with open(setupFile, 'w') as f:
                 json.dump(setUpInfo, f)
         except Exception as e:
-            projectairsim_log().warning(f"Failed to write Startup.json during close: {e}")
+            self.errorMsg = f"Failed to write Startup.json during close: {e}"
+            projectairsim_log().warning(self.errorMsg)
+            self.save_Event("Disconnect Error", self.errorMsg)
          # Safely shut down drone even if mid-flight
         try:
             self.drone.land()
-        except:
-            pass 
-    
+        except Exception as e:
+            self.errorMsg = f"Failed to land drone: {e} "
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Disconnect Error", self.errorMsg)
         try:
             self.drone.disarm()
             self.drone.disable_api_control()
-        except:
-            pass
+        except Exception as e:
+            self.errorMsg = f"Error Disarming drone: {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Disconnect Error", self.errorMsg)
     
         try:
             self.client.disconnect()
-        except:
-            pass
+        except Exception as e:
+            self.errorMsg = f"Error Disconnecting from client: {e}"
+            projectairsim_log().error(self.errorMsg)
+            self.save_Event("Disconnect Error", self.errorMsg)
 
         finally:
             self._write_run_metadata("closed")
