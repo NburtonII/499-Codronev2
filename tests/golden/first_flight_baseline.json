@@ -1,0 +1,12 @@
+{
+  "mission_id": "first_flight",
+  "completion_time_s": 10.0,
+  "collisions": 0,
+  "success": true,
+  "failure_reason": null,
+  "tolerance": {
+    "completion_time_s_max_deviation_pct": 50,
+    "completion_time_s_hard_ceiling_s": 60
+  },
+  "note": "Baseline established from expected first_flight.json run. Update completion_time_s after first clean simulator run."
+}
