@@ -21,6 +21,8 @@
 #include "core_sim/physics_common_types.hpp"
 #include "core_sim/transforms/transform.hpp"
 #include "core_sim/viewport_camera.hpp"
+#include "Engine/EngineTypes.h"
+#include "Components/SphereComponent.h"
 
 namespace projectairsim = microsoft::projectairsim;
 
@@ -28,6 +30,15 @@ AUnrealViewportCamera::AUnrealViewportCamera(
     const FObjectInitializer& ObjectInitialize)
     : ACineCameraActor(ObjectInitialize) {
   PrimaryActorTick.bCanEverTick = true;
+
+  CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
+  RootComponent = CollisionSphere;
+
+  GerCineCameraComponent()->SetUpAttachment(CollisionSphere);
+
+  CollisionSphere->InitSphereRadius(5.0f);
+  CollisionSphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+  CollisionSphere->SetCollisionProfileName(TEXT("BlockAll"));
 }
 
 void AUnrealViewportCamera::Initialize(
@@ -78,9 +89,39 @@ void AUnrealViewportCamera::MoveViewportCameraToTargetPose() {
       UnrealHelpers::ToFVector(projectairsim::TransformUtils::NedToNeuLinear(
           projectairsim::TransformUtils::ToCentimeters(TgtPose.position)));
   const FRotator TgtRot = UnrealHelpers::ToFRotator(TgtPose.orientation);
+  //Adding Occlusion to the camera
+  UWorld* world = getWorld();
+  if(world)
+  {
+    FVector DroneWorldLoc = GetActorLocation();
 
+    FHitResult HitResult;
+    FCollisionQUeryParams QueryParams;
+    QueryParams.AddIgnoredActor(this);
+
+    bool bhit = World->LineTraceSingleByChannel(
+            HitResult,
+            DroneWorldLoc,      // trace from drone
+            TgtLocNEU,          // to desired camera position
+            ECC_Camera,         // camera collision channel
+            QueryParams
+        );
+      FVector SafeCameraLoc = TgtLocNEU;
+        if (bHit)
+        {
+            // Pull camera slightly in front of the hit point
+            FVector Dir = (TgtLocNEU - DroneWorldLoc).GetSafeNormal();
+            SafeCameraLoc = HitResult.Location - Dir * 20.0f; // 20cm buffer
+        }
+
+  }
   // Move UE position
-  this->SetActorLocationAndRotation(TgtLocNEU, TgtRot);
+  FHitResult HitResult;
+  this->SetActorLocationAndRotation(
+    TgtLocNEU, 
+    TgtRot,
+    true,
+    &HitResult);
 }
 
 void AUnrealViewportCamera::UpdateViewportCameraAspectRatio(float aspectRatio) {

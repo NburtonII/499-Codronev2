@@ -1,0 +1,6 @@
+timestamp,event_type,details
+Thu Apr 30 15:55:25 2026,run_start,"map:ClassRoom,run:151"
+Thu Apr 30 15:56:00 2026,Obstacle_Detected,Forward obstacle at 1.35 m
+Thu Apr 30 15:56:00 2026,avoidance_start,"zones: {'forward': 1.3502123407904507, 'backward': 2.9930276929097155, 'right': 1.5632233125544406, 'left': 1.561226904439449, 'above': 1.3502123407904507, 'below': 3.8648388998628342}"
+Thu Apr 30 15:56:31 2026,avoidance_failure,"No clear path detected, initiating emergency landing."
+Thu Apr 30 15:57:10 2026,Disconnect Error,Failed to land drone: 'Drone' object has no attribute 'land' 

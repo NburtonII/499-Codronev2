@@ -1,0 +1,5 @@
+timestamp,event_type,details
+Thu Apr 30 15:50:08 2026,run_start,"map:ClassRoom,run:145"
+Thu Apr 30 15:51:04 2026,Disconnect Error,Failed to land drone: 'Drone' object has no attribute 'land' 
+Thu Apr 30 15:51:06 2026,Disconnect Error,Failed to land drone: 'Drone' object has no attribute 'land' 
+Thu Apr 30 15:51:06 2026,Disconnect Error,Error Disarming drone: Object closed

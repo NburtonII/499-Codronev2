@@ -1,7 +1,7 @@
 {
   "run_number": 115,
-  "status": "connected",
-  "map": "BasicArena",
+  "status": "closed",
+  "map": "ClassRoom",
   "commands_csv": "runs\\RunCommands\\Run_115_Commands.csv",
   "telemetry_csv": "runs\\RunTelemetry\\Run_115_Telemetry.csv",
   "events_csv": "runs\\RunEvents\\Run_115_Events.csv",

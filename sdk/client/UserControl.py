@@ -304,6 +304,9 @@ class UserControl:
             ])
     
     def save_Event(self, event_type, details=""):
+        if not self.EventsFilePath:
+            projectairsim_log().warning(f"Event not saved (no path): {event_type} - {details}")
+            return
         current_Date = time.asctime(time.localtime())
         with open(self.EventsFilePath, 'a') as f:
             writer = csv.writer(f)
@@ -318,7 +321,7 @@ class UserControl:
 
         try:
             # Disarm safely before reloading
-            # We ignore errors here in case the drone is already disarmed or in a bad state, since the scene reload will reset everything anyway.
+            # We ignore errors here in case the drone is already disarmed or in  World scenea bad state, since the scene reload will reset everything anyway.
             try:
                 self.drone.disarm()
                 self.drone.disable_api_control()

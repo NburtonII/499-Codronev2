@@ -1,0 +1,9 @@
+{
+  "run_number": 141,
+  "status": "closed",
+  "map": "ClassRoom",
+  "commands_csv": "runs\\RunCommands\\Run_141_Commands.csv",
+  "telemetry_csv": "runs\\RunTelemetry\\Run_141_Telemetry.csv",
+  "events_csv": "runs\\RunEvents\\Run_141_Events.csv",
+  "metrics_json": "runs/Run_141_metrics.json"
+}
