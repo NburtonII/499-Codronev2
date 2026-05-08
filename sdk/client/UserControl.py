@@ -64,6 +64,7 @@ class UserControl:
         self.collision = False
         self.collision_Count = 0
         self.collision_objects = []
+        self.out_of_bounds = False
         
 
         ##setup for drone lidar
@@ -677,8 +678,19 @@ class UserControl:
                 await self.statePoll(1)
                 self.save_Command(com, dur, status="ok", notes="")
     
-    def _out_of_bounds(self):
-        pass
+    def _out_of_bounds(self, reason="altitude"):
+        if not self.takeOff:
+            return
+        self.out_of_bounds = True
+        self.emergency_landing = True
+        msg = f"Out of bounds detected (reason={reason}). Emergency landing initiated."
+        projectairsim_log().warning(msg)
+        self.save_Event("Out_of_Bounds", msg)
+        if hasattr(self, "Lidar_loop"):
+            asyncio.run_coroutine_threadsafe(
+                self._emergency_land(),
+                self.Lidar_loop
+            )
 
     def _on_collision(self, collision):
         if not self.takeOff:
@@ -741,15 +753,7 @@ class UserControl:
                 else:
                     fwd = rgt = lft = abv = blw = float('inf')
                 if z < self.Kill_z_up or z > self.kill_z_down:
-                    projectairsim_log().warning(f"Drone has exceeded safe altitude limits (z={z:.3f}). Initiating emergency landing.")
-                    try:
-                        land_task = await self.drone.land_async()
-                        await land_task
-                        projectairsim_log().info("Emergency landing completed successfully.")
-                    except Exception as e:
-                        self.errorMsg = f"Error during emergency landing: {e}"
-                        projectairsim_log().error(self.errorMsg)
-                        self.save_Event("Emergency land Error", self.errorMsg)
+                    self._out_of_bounds(reason="altitude")
                     break
                 projectairsim_log().info(
                     f"Drone State at {time.asctime(time.localtime())}:\n"
