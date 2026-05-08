@@ -105,10 +105,14 @@ async def run_mission(json_path, controller):
             if reading_m is not None:
                 front_range_readings.append(reading_m * 100.0)  # store in cm
 
-            # Stop the mission early if a collision was detected mid-step.
+            # Stop the mission early if a collision or out-of-bounds was detected mid-step.
             if controller.collision:
                 success = False
                 failure_reason = "collision"
+                break
+            if getattr(controller, "out_of_bounds", False):
+                success = False
+                failure_reason = "out_of_bounds"
                 break
 
     except Exception as e:
