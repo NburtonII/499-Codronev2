@@ -19,9 +19,8 @@
 			]
 		},
 		{
-			"Name": "AdvancedFadeObjects",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/Fab/product/d7d8c6c6-1ea9-4de9-a69c-c8161c04137f"
+			"Name": "LudusAI",
+			"Enabled": true
 		}
 	]
 }
