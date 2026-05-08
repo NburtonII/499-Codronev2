@@ -1,0 +1,17 @@
+{
+  "mission_id": "obstacle_course_v1",
+  "description": "ObstacleCourse test mission that drives into at least two obstacle lanes to exercise collision and failure reporting.",
+  "version": "1.0",
+  "steps": [
+    { "command": "Takeoff", "duration": 0 },
+    { "command": "Forward", "duration": 2 },
+    { "command": "Right", "duration": 1 },
+    { "command": "Forward", "duration": 3 },
+    { "command": "Yaw_Left", "duration": 2 },
+    { "command": "Forward", "duration": 2 },
+    { "command": "Left", "duration": 1 },
+    { "command": "Forward", "duration": 3 },
+    { "command": "State_Polling", "duration": 1 },
+    { "command": "Land", "duration": 0 }
+  ]
+}

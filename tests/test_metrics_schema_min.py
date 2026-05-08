@@ -19,6 +19,7 @@ import unittest
 # ------------------------------------------------------------------
 
 REQUIRED_FIELDS = ("success", "completion_time_s", "collisions")
+STRUCTURED_FAILURE_REASONS = ("collision", "out_of_bounds", "timeout")
 
 
 def validate_metrics(metrics):
@@ -53,10 +54,17 @@ def validate_metrics(metrics):
     if metrics["collisions"] < 0:
         raise ValueError("'collisions' must be >= 0")
 
+    failure_reason = metrics.get("failure_reason", None)
+    if failure_reason is not None and not isinstance(failure_reason, str):
+        raise TypeError(
+            f"'failure_reason' must be str or None, got {type(failure_reason).__name__}"
+        )
+
 
 # ------------------------------------------------------------------
 # Tests
 # ------------------------------------------------------------------
+
 
 class TestMetricsSchemaMin(unittest.TestCase):
 
@@ -94,7 +102,21 @@ class TestMetricsSchemaMin(unittest.TestCase):
     def test_extra_fields_are_allowed(self):
         """Additional fields beyond the minimum schema are permitted."""
         m = self._valid()
-        m["min_front_range_cm"] = 55.0  # future field — should not break validation
+        m["min_front_range_cm"] = 55.0
+        validate_metrics(m)
+
+    def test_structured_failure_codes_pass(self):
+        """Week 10 structured failure codes remain valid string values."""
+        for code in STRUCTURED_FAILURE_REASONS:
+            m = self._valid()
+            m["success"] = False
+            m["failure_reason"] = code
+            validate_metrics(m)
+
+    def test_descriptive_failure_string_passes(self):
+        m = self._valid()
+        m["success"] = False
+        m["failure_reason"] = "rotate_to_yaw_async timed out after 2.0s"
         validate_metrics(m)
 
     # ------------------------------------------------------------------
@@ -146,6 +168,12 @@ class TestMetricsSchemaMin(unittest.TestCase):
         """collisions must be int, not float."""
         m = self._valid()
         m["collisions"] = 1.0
+        with self.assertRaises(TypeError):
+            validate_metrics(m)
+
+    def test_failure_reason_int_raises(self):
+        m = self._valid()
+        m["failure_reason"] = 123
         with self.assertRaises(TypeError):
             validate_metrics(m)
 
