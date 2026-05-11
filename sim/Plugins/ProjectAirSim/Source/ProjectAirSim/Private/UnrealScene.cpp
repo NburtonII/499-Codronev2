@@ -219,10 +219,6 @@ void AUnrealScene::SwitchStreamingView() {
   UnrealLogger::Log(projectairsim::LogLevel::kTrace,
                     TEXT("[UnrealScene] Switched view to actor: %s"),
                     *(unreal_actors[idx_actor_to_view]->GetName()));
-                  
-    if (unreal_viewport_camera_){
-      unreal_viewport_camera_->SetTrackedDrone(UnrealRobotToView)
-    }
 }
 
 void AUnrealScene::ToggleTrace() {
@@ -279,8 +275,6 @@ void AUnrealScene::EnableUnrealViewportCamera(bool enable) {
         unreal_viewport_camera_);
     unreal_viewport_camera_->Initialize(
         *(sim_scene->GetViewportCamera().get()));
-
-    unreal_viewport_camera_-> SetTrackedDrone(viewed_actor);
   } else if (!enable && unreal_viewport_camera_) {
     unreal_viewport_camera_->Destroy();
     unreal_viewport_camera_ = nullptr;

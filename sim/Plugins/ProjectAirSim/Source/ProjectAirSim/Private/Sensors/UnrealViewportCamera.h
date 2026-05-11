@@ -17,8 +17,6 @@
 #include "core_sim/viewport_camera.hpp"
 // comment so that generated.h is always the last include file with clang-format
 #include "UnrealViewportCamera.generated.h"
-#include "Engine/EngineTypes.h"
-#include "Components/SphereComponent.h"
 
 UCLASS()
 class AUnrealViewportCamera : public ACineCameraActor {
@@ -31,10 +29,6 @@ class AUnrealViewportCamera : public ACineCameraActor {
 
   void Tick(float DeltaTime) override;
 
-  void SetTrackedDrone(AActor* InDrone) { TrackedDroneActor = InDrone; }
-
-  UPROPERTY()
-  USphereComponent* CollisionSphere;
  protected:
   void BeginPlay() override;
 
@@ -48,7 +42,6 @@ class AUnrealViewportCamera : public ACineCameraActor {
   void MoveViewportCameraToTargetPose();
   void MoveViewportCameraToAspectRatio();
   void MoveViewportCameraToZoom();
-  AActor* TrackedDroneActor = nullptr;
 
   microsoft::projectairsim::Pose ViewportCameraTargetPose;
   float aspect_ratio = 0;
