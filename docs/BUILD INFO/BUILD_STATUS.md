@@ -26,7 +26,7 @@ These instructions assume a fresh install of everything.
 
 1. Make sure you install the following:
 
-    - Install Python 3.12, and
+    - Install Python 3.11, and
   
     - Unreal 5.7
 
