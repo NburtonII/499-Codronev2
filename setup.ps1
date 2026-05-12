@@ -16,7 +16,7 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  CoDrone Simulator - Setup" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 
-# ── 1. Python 3.12 ────────────────────────────────────────────────────────────
+# 1. Python 3.12
 Write-Host ""
 Write-Host "[1/4] Checking Python 3.12..." -ForegroundColor Yellow
 try {
@@ -24,7 +24,7 @@ try {
     if ($pyVersion -match "3\.12") {
         Write-Host "      PASS: $pyVersion" -ForegroundColor Green
     } else {
-        Write-Host "      FAIL: Found $pyVersion — Python 3.12 is required." -ForegroundColor Red
+        Write-Host "      FAIL: Found $pyVersion - Python 3.12 is required." -ForegroundColor Red
         Write-Host "            Download: https://www.python.org/downloads/" -ForegroundColor Red
         $Failed += "Python 3.12"
     }
@@ -34,7 +34,7 @@ try {
     $Failed += "Python 3.12"
 }
 
-# ── 2. Visual Studio 2022 ─────────────────────────────────────────────────────
+# 2. Visual Studio 2022
 Write-Host ""
 Write-Host "[2/4] Checking Visual Studio 2022..." -ForegroundColor Yellow
 $vsPaths = @(
@@ -53,7 +53,7 @@ if ($vsFound) {
     $Failed += "Visual Studio 2022"
 }
 
-# ── 3. Unreal Engine 5.7 ──────────────────────────────────────────────────────
+# 3. Unreal Engine 5.7
 Write-Host ""
 Write-Host "[3/4] Checking Unreal Engine 5.7..." -ForegroundColor Yellow
 $ueBinary = Join-Path $UERoot "Engine\Binaries\Win64\UnrealEditor.exe"
@@ -66,7 +66,7 @@ if (Test-Path $ueBinary) {
     $Failed += "Unreal Engine 5.7"
 }
 
-# ── 4. Install Python SDK ─────────────────────────────────────────────────────
+# 4. Install Python SDK
 Write-Host ""
 Write-Host "[4/4] Installing Python SDK..." -ForegroundColor Yellow
 $sdkReqs = Join-Path $RepoRoot "sdk\client\projectairsim\requirements.txt"
@@ -83,7 +83,7 @@ if (Test-Path $sdkReqs) {
     $Failed += "Python SDK"
 }
 
-# ── Summary ───────────────────────────────────────────────────────────────────
+# Summary
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
 if ($Failed.Count -eq 0) {
@@ -93,7 +93,7 @@ if ($Failed.Count -eq 0) {
     Write-Host "Next steps:" -ForegroundColor White
     Write-Host "  1. Open the Unreal project:" -ForegroundColor White
     Write-Host "     $RepoRoot\sim\CodroneSim.uproject" -ForegroundColor White
-    Write-Host "  2. Click 'Yes' when prompted to build missing modules." -ForegroundColor White
+    Write-Host "  2. Click Yes when prompted to build missing modules." -ForegroundColor White
     Write-Host "  3. Once the editor loads, run a Python script from the repo root:" -ForegroundColor White
     Write-Host "     python examples\lab_01_first_flight.py" -ForegroundColor White
     Write-Host ""

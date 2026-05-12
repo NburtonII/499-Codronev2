@@ -19,7 +19,7 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  CoDrone Simulator - Package Build" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 
-# ── Preflight checks ──────────────────────────────────────────────────────────
+# Preflight checks
 Write-Host ""
 Write-Host "Running preflight checks..." -ForegroundColor Yellow
 
@@ -39,9 +39,9 @@ Write-Host "  PASS: Project file found." -ForegroundColor Green
 
 Write-Host "  Output directory: $OutputDir" -ForegroundColor White
 
-# ── Package ───────────────────────────────────────────────────────────────────
+# Package
 Write-Host ""
-Write-Host "Starting packaging — this will take 20-40 minutes..." -ForegroundColor Yellow
+Write-Host "Starting packaging - this will take 20-40 minutes..." -ForegroundColor Yellow
 Write-Host ""
 
 $UATArgs = @(
