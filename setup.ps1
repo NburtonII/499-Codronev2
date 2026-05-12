@@ -72,9 +72,13 @@ Write-Host "[4/4] Installing Python SDK..." -ForegroundColor Yellow
 $sdkReqs = Join-Path $RepoRoot "sdk\client\projectairsim\requirements.txt"
 if (Test-Path $sdkReqs) {
     try {
-        pip install -r $sdkReqs
+        $sdkDir = Join-Path $RepoRoot "sdk\client\projectairsim"
+        Push-Location $sdkDir
+        pip install -r requirements.txt
+        Pop-Location
         Write-Host "      PASS: Python SDK installed." -ForegroundColor Green
     } catch {
+        Pop-Location
         Write-Host "      FAIL: pip install failed. Make sure Python 3.12 is installed first." -ForegroundColor Red
         $Failed += "Python SDK"
     }
