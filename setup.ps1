@@ -18,20 +18,20 @@ Write-Host "========================================" -ForegroundColor Cyan
 
 # 1. Python 3.12
 Write-Host ""
-Write-Host "[1/4] Checking Python 3.12..." -ForegroundColor Yellow
+Write-Host "[1/4] Checking Python 3.11..." -ForegroundColor Yellow
 try {
     $pyVersion = & python --version 2>&1
-    if ($pyVersion -match "3\.12") {
+    if ($pyVersion -match "3\.11") {
         Write-Host "      PASS: $pyVersion" -ForegroundColor Green
     } else {
-        Write-Host "      FAIL: Found $pyVersion - Python 3.12 is required." -ForegroundColor Red
+        Write-Host "      FAIL: Found $pyVersion - Python 3.11 is required." -ForegroundColor Red
         Write-Host "            Download: https://www.python.org/downloads/" -ForegroundColor Red
-        $Failed += "Python 3.12"
+        $Failed += "Python 3.11"
     }
 } catch {
     Write-Host "      FAIL: Python not found in PATH." -ForegroundColor Red
     Write-Host "            Download: https://www.python.org/downloads/" -ForegroundColor Red
-    $Failed += "Python 3.12"
+    $Failed += "Python 3.11"
 }
 
 # 2. Visual Studio 2022
