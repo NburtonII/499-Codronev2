@@ -1,0 +1,8 @@
+{
+  "description": "Full demo flight using all implemented commands: takeoff, directional movement, yaw, state polling, and landing with obstacle-awareness pauses.",
+  "success": false,
+  "completion_time_s": 153.387,
+  "collisions": 0,
+  "failure_reason": "'Drone' object has no attribute 'is_flying'",
+  "min_front_range_cm": null
+}

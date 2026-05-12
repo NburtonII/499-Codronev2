@@ -1,1 +1,85 @@
 timestamp,command,duration_s,status,notes
+Mon May 11 23:27:01 2026,Takeoff,0,ok,
+
+Mon May 11 23:27:05 2026,State_Polling,2,ok,
+
+Mon May 11 23:27:07 2026,Forward,3,ok,
+
+Mon May 11 23:27:09 2026,State_Polling,1,ok,
+
+Mon May 11 23:27:14 2026,Right,2,ok,
+
+Mon May 11 23:27:16 2026,State_Polling,1,ok,
+
+Mon May 11 23:27:21 2026,Forward,2,ok,
+
+Mon May 11 23:27:23 2026,State_Polling,1,ok,
+
+Mon May 11 23:27:28 2026,Up,2,ok,
+
+Mon May 11 23:27:30 2026,State_Polling,1,ok,
+
+Mon May 11 23:27:36 2026,Forward,3,ok,
+
+Mon May 11 23:27:38 2026,State_Polling,1,ok,
+
+Mon May 11 23:27:44 2026,Yaw_Left,3,ok,
+
+Mon May 11 23:27:46 2026,State_Polling,1,ok,
+
+Mon May 11 23:27:52 2026,Forward,3,ok,
+
+Mon May 11 23:27:54 2026,State_Polling,1,ok,
+
+Mon May 11 23:27:58 2026,Left,2,ok,
+
+Mon May 11 23:28:01 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:05 2026,Up,2,ok,
+
+Mon May 11 23:28:08 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:13 2026,Yaw_Right,3,ok,
+
+Mon May 11 23:28:15 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:20 2026,Forward,2,ok,
+
+Mon May 11 23:28:22 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:27 2026,Down,2,ok,
+
+Mon May 11 23:28:29 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:34 2026,Backward,2,ok,
+
+Mon May 11 23:28:36 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:40 2026,Right,2,ok,
+
+Mon May 11 23:28:43 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:47 2026,Down,2,ok,
+
+Mon May 11 23:28:50 2026,State_Polling,1,ok,
+
+Mon May 11 23:28:56 2026,Backward,3,ok,
+
+Mon May 11 23:28:58 2026,State_Polling,1,ok,
+
+Mon May 11 23:29:02 2026,Left,2,ok,
+
+Mon May 11 23:29:05 2026,State_Polling,1,ok,
+
+Mon May 11 23:29:10 2026,Yaw_Left,3,ok,
+
+Mon May 11 23:29:13 2026,State_Polling,1,ok,
+
+Mon May 11 23:29:17 2026,Backward,2,ok,
+
+Mon May 11 23:29:19 2026,State_Polling,1,ok,
+
+Mon May 11 23:29:25 2026,Yaw_Right,3,ok,
+
+Mon May 11 23:29:29 2026,State_Polling,2,ok,
+

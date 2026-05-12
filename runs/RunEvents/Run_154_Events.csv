@@ -1,3 +1,7 @@
 timestamp,event_type,details
 Thu Apr 30 16:30:29 2026,run_start,"map:ClassRoom,run:154"
 Fri May  1 10:45:08 2026,run_start,"map:ClassRoom,run:154"
+Mon May 11 23:26:56 2026,run_start,"map:BasicArena,run:154"
+Mon May 11 23:27:06 2026,Obstacle_Detected,Forward obstacle at 3.42 m
+Mon May 11 23:27:06 2026,avoidance_start,"zones: {'forward': 3.4207629470817524, 'backward': 47.92885032997261, 'right': 2.0654312103142725, 'left': 2.062629726305467, 'above': 1.9444114620572657, 'below': 1.9444114620572657}"
+Mon May 11 23:29:30 2026,Disconnect Error,Failed to land drone: 'Drone' object has no attribute 'land' 

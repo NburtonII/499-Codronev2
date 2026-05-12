@@ -1,0 +1,346 @@
+23:40:09:734 [INFO] Connecting to simulation server at 127.0.0.1
+23:40:09:742 [INFO] Connection opened.
+23:40:09:744 [INFO] Started the pub-sub topic receiving thread.
+23:40:09:747 [INFO] Loading scene config: C:\Users\nyles\Desktop\Codrone\499-Codronev2\sdk\client\sim_config\BasicArenaDrone.jsonc
+23:40:12:141 [INFO] Getting the list of available topic info from the sim server...
+23:40:12:152 [INFO] Successfully received topic info list.
+23:40:14:170 [INFO] World object updated for the loaded scene '/Sim/SceneBasicDrone'. Note: Any previous Drone object instances may no longer be valid.
+23:40:14:172 [INFO] Trajectory 'null_trajectory' imported successfully.
+23:40:14:172 [INFO] Initalizing Drone 'Drone1'...
+23:40:14:173 [INFO] -------------------------------------------------
+23:40:14:173 [INFO] The following topics can be subscribed to for robot 'Drone1':
+23:40:14:173 [INFO]     sensors["lidar1"]["lidar"]
+23:40:14:174 [INFO]     sensors["Chase"]["scene_camera"]
+23:40:14:174 [INFO]     sensors["Chase"]["scene_camera_info"]
+23:40:14:175 [INFO]     sensors["DownCamera"]["scene_camera"]
+23:40:14:176 [INFO]     sensors["DownCamera"]["scene_camera_info"]
+23:40:14:177 [INFO]     sensors["DownCamera"]["depth_camera"]
+23:40:14:177 [INFO]     sensors["DownCamera"]["depth_camera_info"]
+23:40:14:178 [INFO]     sensors["IMU1"]["imu_kinematics"]
+23:40:14:178 [INFO]     sensors["GPS"]["gps"]
+23:40:14:179 [INFO]     sensors["Barometer"]["barometer"]
+23:40:14:179 [INFO]     sensors["Magnetometer"]["magnetometer"]
+23:40:14:179 [INFO]     sensors["FrontRange"]["distance_sensor"]
+23:40:14:180 [INFO]     sensors["BottomRange"]["distance_sensor"]
+23:40:14:180 [INFO]     sensors["Lidar1"]["lidar"]
+23:40:14:181 [INFO]     robot_info["actual_pose"]
+23:40:14:181 [INFO]     robot_info["collision_info"]
+23:40:14:182 [INFO]     robot_info["rotor_info"]
+23:40:14:182 [INFO] -------------------------------------------------
+23:40:14:183 [INFO] Drone 'Drone1' initialized for World scene '/Sim/SceneBasicDrone'
+23:40:14:191 [INFO] Connected to AirSim with run number: 156
+23:40:14:204 [INFO] takeoff_async: starting
+23:40:17:603 [INFO] takeoff_async: completed
+23:40:18:144 [INFO] Drone State at Mon May 11 23:40:18 2026:
+  Position  -> N: -0.000, E: -0.000, D: -1.554
+  Orientation -> W: 1.000, X: 0.000, Y: 0.000, Z: 0.000
+Lidar Zones -> Forward:4.94m, Right :4.94m, Left  :4.94m, Above :4.94m, Below :4.94m
+
+23:40:19:878 [INFO] State Polling: Started
+23:40:20:392 [INFO] Drone State at Mon May 11 23:40:20 2026:
+  Position  -> N: -0.000, E: -0.000, D: -1.550
+  Orientation -> W: 1.000, X: 0.000, Y: 0.000, Z: 0.000
+Lidar Zones -> Forward:4.84m, Right :4.84m, Left  :4.84m, Above :4.84m, Below :4.84m
+
+23:40:21:937 [INFO] Drone State at Mon May 11 23:40:21 2026:
+  Position  -> N: -0.000, E: -0.000, D: -1.564
+  Orientation -> W: 1.000, X: 0.000, Y: 0.000, Z: 0.000
+Lidar Zones -> Forward:4.89m, Right :4.89m, Left  :4.89m, Above :4.89m, Below :4.89m
+
+23:40:22:962 [INFO] State Polling: Completed
+23:40:23:693 [INFO] Move-Forward Invoked
+23:40:23:841 [WARNING] Obstacle detected within 3.89 meters ahead - triggering avoidance.
+23:40:23:846 [WARNING] Avoidance: Stopping Movement
+23:40:23:856 [INFO] Move-Forward Completed
+23:40:24:362 [INFO] Drone State at Mon May 11 23:40:24 2026:
+  Position  -> N: 0.005, E: 0.000, D: -1.584
+  Orientation -> W: 0.993, X: 0.000, Y: -0.121, Z: 0.000
+Lidar Zones -> Forward:3.67m, Right :3.79m, Left  :3.79m, Above :3.67m, Below :3.67m
+
+23:40:25:556 [INFO] AVOIDANCE: Path is clear on the right 
+23:40:26:084 [INFO] State Polling: Started
+23:40:26:602 [INFO] Drone State at Mon May 11 23:40:26 2026:
+  Position  -> N: 0.446, E: 0.108, D: -1.598
+  Orientation -> W: 0.996, X: 0.088, Y: 0.004, Z: -0.001
+Lidar Zones -> Forward:4.29m, Right :3.60m, Left  :6.66m, Above :3.60m, Below :3.60m
+
+23:40:27:614 [INFO] State Polling: Completed
+23:40:28:317 [INFO] Move-Right Invoked
+23:40:30:835 [INFO] Move-Right Completed
+23:40:31:336 [INFO] Drone State at Mon May 11 23:40:31 2026:
+  Position  -> N: 0.465, E: 7.239, D: -2.851
+  Orientation -> W: 0.999, X: 0.032, Y: -0.000, Z: -0.001
+Lidar Zones -> Forward:7.76m, Right :37.61m, Left  :4.28m, Above :4.28m, Below :4.28m
+
+23:40:33:056 [INFO] State Polling: Started
+23:40:33:553 [INFO] Drone State at Mon May 11 23:40:33 2026:
+  Position  -> N: 0.461, E: 9.316, D: -2.841
+  Orientation -> W: 0.998, X: -0.070, Y: -0.000, Z: -0.001
+Lidar Zones -> Forward:9.13m, Right :8.69m, Left  :10.24m, Above :8.69m, Below :8.69m
+
+23:40:34:565 [INFO] State Polling: Completed
+23:40:35:267 [INFO] Move-Forward Invoked
+23:40:37:705 [INFO] Move-Forward Completed
+23:40:38:217 [INFO] Drone State at Mon May 11 23:40:38 2026:
+  Position  -> N: 6.665, E: 7.040, D: -3.984
+  Orientation -> W: 0.999, X: -0.002, Y: -0.029, Z: -0.024
+Lidar Zones -> Forward:52.39m, Right :6.68m, Left  :6.67m, Above :6.30m, Below :6.30m
+
+23:40:39:962 [INFO] State Polling: Started
+23:40:40:482 [INFO] Drone State at Mon May 11 23:40:40 2026:
+  Position  -> N: 8.697, E: 7.143, D: -3.974
+  Orientation -> W: 0.997, X: -0.005, Y: 0.071, Z: -0.025
+Lidar Zones -> Forward:13.30m, Right :14.00m, Left  :13.20m, Above :13.20m, Below :13.20m
+
+23:40:41:503 [INFO] State Polling: Completed
+23:40:42:204 [INFO] Move-Up Invoked
+23:40:44:690 [INFO] Move-Up Completed
+23:40:45:218 [INFO] Drone State at Mon May 11 23:40:45 2026:
+  Position  -> N: 6.213, E: 6.979, D: -12.312
+  Orientation -> W: 1.000, X: 0.000, Y: 0.001, Z: -0.022
+Lidar Zones -> Forward:50.95m, Right :36.05m, Left  :46.88m, Above :36.05m, Below :36.05m
+
+23:40:46:951 [INFO] State Polling: Started
+23:40:47:468 [INFO] Drone State at Mon May 11 23:40:47 2026:
+  Position  -> N: 6.217, E: 6.978, D: -13.706
+  Orientation -> W: 1.000, X: 0.000, Y: 0.000, Z: -0.022
+Lidar Zones -> Forward:49.77m, Right :35.76m, Left  :46.45m, Above :35.76m, Below :35.76m
+
+23:40:48:489 [INFO] State Polling: Completed
+23:40:49:241 [INFO] Move-Forward Invoked
+23:40:52:826 [INFO] Move-Forward Completed
+23:40:53:327 [INFO] Drone State at Mon May 11 23:40:53 2026:
+  Position  -> N: 17.251, E: 6.977, D: -13.614
+  Orientation -> W: 1.000, X: 0.000, Y: -0.009, Z: -0.022
+Lidar Zones -> Forward:42.73m, Right :23.21m, Left  :23.25m, Above :31.70m, Below :21.91m
+
+23:40:55:057 [INFO] State Polling: Started
+23:40:55:573 [INFO] Drone State at Mon May 11 23:40:55 2026:
+  Position  -> N: 19.540, E: 7.057, D: -13.629
+  Orientation -> W: 0.996, X: -0.004, Y: 0.091, Z: -0.022
+Lidar Zones -> Forward:41.37m, Right :31.57m, Left  :41.85m, Above :31.57m, Below :31.95m
+
+23:40:56:581 [INFO] State Polling: Completed
+23:40:57:298 [INFO] Yaw_Left Invoked
+23:41:00:761 [INFO] Yaw_Left Completed
+23:41:01:252 [INFO] Drone State at Mon May 11 23:41:01 2026:
+  Position  -> N: 16.724, E: 6.964, D: -13.772
+  Orientation -> W: 0.771, X: -0.003, Y: 0.004, Z: 0.637
+Lidar Zones -> Forward:43.53m, Right :31.71m, Left  :45.19m, Above :31.71m, Below :32.17m
+
+23:41:02:980 [INFO] State Polling: Started
+23:41:03:494 [INFO] Drone State at Mon May 11 23:41:03 2026:
+  Position  -> N: 16.721, E: 6.979, D: -13.800
+  Orientation -> W: 0.735, X: -0.000, Y: 0.000, Z: 0.679
+Lidar Zones -> Forward:43.54m, Right :31.65m, Left  :45.34m, Above :31.65m, Below :32.21m
+
+23:41:04:543 [INFO] State Polling: Completed
+23:41:05:246 [INFO] Move-Forward Invoked
+23:41:08:818 [INFO] Move-Forward Completed
+23:41:09:314 [INFO] Drone State at Mon May 11 23:41:09 2026:
+  Position  -> N: 27.774, E: 6.993, D: -14.861
+  Orientation -> W: 0.734, X: -0.006, Y: -0.007, Z: 0.679
+Lidar Zones -> Forward:38.99m, Right :25.05m, Left  :24.77m, Above :30.04m, Below :23.47m
+
+23:41:11:031 [INFO] State Polling: Started
+23:41:11:546 [INFO] Drone State at Mon May 11 23:41:11 2026:
+  Position  -> N: 32.049, E: 6.771, D: -15.051
+  Orientation -> W: 0.732, X: 0.022, Y: 0.036, Z: 0.680
+Lidar Zones -> Forward:33.18m, Right :30.61m, Left  :30.95m, Above :30.61m, Below :30.85m
+
+23:41:12:558 [INFO] State Polling: Completed
+23:41:13:244 [INFO] Move-Left Invoked
+23:41:15:646 [INFO] Move-Left Completed
+23:41:16:187 [INFO] Drone State at Mon May 11 23:41:16 2026:
+  Position  -> N: 32.244, E: -0.433, D: -15.785
+  Orientation -> W: 0.731, X: -0.020, Y: 0.018, Z: 0.682
+Lidar Zones -> Forward:25.84m, Right :25.00m, Left  :26.24m, Above :25.84m, Below :25.00m
+
+23:41:17:894 [INFO] State Polling: Started
+23:41:18:399 [INFO] Drone State at Mon May 11 23:41:18 2026:
+  Position  -> N: 32.050, E: -4.596, D: -15.948
+  Orientation -> W: 0.729, X: 0.032, Y: -0.020, Z: 0.684
+Lidar Zones -> Forward:24.91m, Right :42.07m, Left  :28.15m, Above :24.91m, Below :24.91m
+
+23:41:19:413 [INFO] State Polling: Completed
+23:41:20:167 [INFO] Move-Up Invoked
+23:41:22:540 [INFO] Move-Up Completed
+23:41:23:046 [INFO] Drone State at Mon May 11 23:41:23 2026:
+  Position  -> N: 31.197, E: -4.811, D: -24.287
+  Orientation -> W: 0.729, X: -0.001, Y: -0.000, Z: 0.684
+Lidar Zones -> Forward:28.02m, Right :43.40m, Left  :31.53m, Above :28.02m, Below :28.02m
+
+23:41:24:768 [INFO] State Polling: Started
+23:41:25:266 [INFO] Drone State at Mon May 11 23:41:25 2026:
+  Position  -> N: 31.191, E: -4.810, D: -25.510
+  Orientation -> W: 0.729, X: -0.000, Y: -0.000, Z: 0.684
+Lidar Zones -> Forward:27.69m, Right :43.44m, Left  :30.56m, Above :27.69m, Below :27.69m
+
+23:41:26:311 [INFO] State Polling: Completed
+23:41:27:030 [INFO] Yaw_Right Invoked
+23:41:30:499 [INFO] Yaw_Right Completed
+23:41:31:008 [INFO] Drone State at Mon May 11 23:41:31 2026:
+  Position  -> N: 31.191, E: -4.809, D: -24.116
+  Orientation -> W: 0.566, X: 0.000, Y: 0.000, Z: -0.824
+Lidar Zones -> Forward:26.53m, Right :44.22m, Left  :31.74m, Above :26.53m, Below :26.53m
+
+23:41:32:719 [INFO] State Polling: Started
+23:41:33:253 [INFO] Drone State at Mon May 11 23:41:33 2026:
+  Position  -> N: 31.191, E: -4.809, D: -24.196
+  Orientation -> W: 0.814, X: 0.000, Y: 0.000, Z: -0.581
+Lidar Zones -> Forward:26.67m, Right :44.38m, Left  :30.98m, Above :26.67m, Below :26.67m
+
+23:41:34:270 [INFO] State Polling: Completed
+23:41:34:989 [INFO] Move-Forward Invoked
+23:41:37:391 [INFO] Move-Forward Completed
+23:41:37:919 [INFO] Drone State at Mon May 11 23:41:37 2026:
+  Position  -> N: 37.389, E: -4.852, D: -25.201
+  Orientation -> W: 0.825, X: 0.017, Y: -0.024, Z: -0.564
+Lidar Zones -> Forward:26.50m, Right :45.72m, Left  :47.32m, Above :26.50m, Below :43.78m
+
+23:41:39:692 [INFO] State Polling: Started
+23:41:40:189 [INFO] Drone State at Mon May 11 23:41:40 2026:
+  Position  -> N: 41.111, E: -3.931, D: -25.326
+  Orientation -> W: 0.821, X: -0.015, Y: 0.069, Z: -0.566
+Lidar Zones -> Forward:20.96m, Right :45.02m, Left  :20.53m, Above :20.53m, Below :20.53m
+
+23:41:41:201 [INFO] State Polling: Completed
+23:41:41:900 [INFO] Move-Down Invoked
+23:41:44:257 [INFO] Move-Down Completed
+23:41:44:781 [INFO] Drone State at Mon May 11 23:41:44 2026:
+  Position  -> N: 37.695, E: -0.823, D: -17.362
+  Orientation -> W: 0.830, X: 0.002, Y: -0.014, Z: -0.557
+Lidar Zones -> Forward:21.61m, Right :39.88m, Left  :21.20m, Above :21.20m, Below :21.31m
+
+23:41:46:480 [INFO] State Polling: Started
+23:41:46:982 [INFO] Drone State at Mon May 11 23:41:46 2026:
+  Position  -> N: 37.612, E: -0.820, D: -16.716
+  Orientation -> W: 0.831, X: 0.000, Y: -0.001, Z: -0.557
+Lidar Zones -> Forward:21.95m, Right :40.15m, Left  :21.22m, Above :21.22m, Below :21.22m
+
+23:41:47:998 [INFO] State Polling: Completed
+23:41:48:762 [INFO] Move-Backward Invoked
+23:41:51:113 [INFO] Move-Backward Completed
+23:41:51:619 [INFO] Drone State at Mon May 11 23:41:51 2026:
+  Position  -> N: 31.445, E: -0.851, D: -18.187
+  Orientation -> W: 0.834, X: -0.017, Y: 0.024, Z: -0.551
+Lidar Zones -> Forward:27.86m, Right :32.50m, Left  :30.64m, Above :27.86m, Below :27.86m
+
+23:41:53:311 [INFO] State Polling: Started
+23:41:53:827 [INFO] Drone State at Mon May 11 23:41:53 2026:
+  Position  -> N: 27.780, E: -1.707, D: -18.337
+  Orientation -> W: 0.830, X: 0.015, Y: -0.078, Z: -0.553
+Lidar Zones -> Forward:29.36m, Right :40.67m, Left  :32.95m, Above :29.36m, Below :29.36m
+
+23:41:54:842 [INFO] State Polling: Completed
+23:41:55:565 [INFO] Move-Right Invoked
+23:41:57:991 [INFO] Move-Right Completed
+23:41:58:497 [INFO] Drone State at Mon May 11 23:41:58 2026:
+  Position  -> N: 31.099, E: 1.657, D: -19.689
+  Orientation -> W: 0.840, X: 0.022, Y: 0.024, Z: -0.542
+Lidar Zones -> Forward:29.72m, Right :41.21m, Left  :29.28m, Above :29.28m, Below :29.28m
+
+23:42:00:237 [INFO] State Polling: Started
+23:42:00:737 [INFO] Drone State at Mon May 11 23:42:00 2026:
+  Position  -> N: 30.280, E: 5.288, D: -19.819
+  Orientation -> W: 0.831, X: -0.074, Y: -0.012, Z: -0.552
+Lidar Zones -> Forward:31.15m, Right :33.27m, Left  :31.26m, Above :31.15m, Below :31.15m
+
+23:42:01:745 [INFO] State Polling: Completed
+23:42:02:467 [INFO] Move-Down Invoked
+23:42:04:878 [INFO] Move-Down Completed
+23:42:05:375 [INFO] Drone State at Mon May 11 23:42:05 2026:
+  Position  -> N: 27.214, E: 1.490, D: -11.826
+  Orientation -> W: 0.838, X: 0.014, Y: 0.003, Z: -0.545
+Lidar Zones -> Forward:30.95m, Right :36.60m, Left  :32.51m, Above :30.95m, Below :31.56m
+
+23:42:07:079 [INFO] State Polling: Started
+23:42:07:577 [INFO] Drone State at Mon May 11 23:42:07 2026:
+  Position  -> N: 27.221, E: 1.407, D: -11.229
+  Orientation -> W: 0.838, X: 0.001, Y: 0.000, Z: -0.545
+Lidar Zones -> Forward:31.05m, Right :36.72m, Left  :31.74m, Above :31.05m, Below :31.05m
+
+23:42:08:592 [INFO] State Polling: Completed
+23:42:09:299 [INFO] Move-Backward Invoked
+23:42:12:967 [INFO] Move-Backward Completed
+23:42:13:482 [INFO] Drone State at Mon May 11 23:42:13 2026:
+  Position  -> N: 16.195, E: 1.538, D: -12.669
+  Orientation -> W: 0.842, X: -0.005, Y: 0.008, Z: -0.539
+Lidar Zones -> Forward:36.90m, Right :21.89m, Left  :21.08m, Above :38.79m, Below :20.22m
+
+23:42:15:226 [INFO] State Polling: Started
+23:42:15:749 [INFO] Drone State at Mon May 11 23:42:15 2026:
+  Position  -> N: 12.462, E: 0.442, D: -12.784
+  Orientation -> W: 0.837, X: 0.017, Y: -0.074, Z: -0.542
+Lidar Zones -> Forward:36.92m, Right :35.50m, Left  :34.51m, Above :39.06m, Below :33.63m
+
+23:42:16:753 [INFO] State Polling: Completed
+23:42:17:456 [INFO] Move-Left Invoked
+23:42:19:895 [INFO] Move-Left Completed
+23:42:20:409 [INFO] Drone State at Mon May 11 23:42:20 2026:
+  Position  -> N: 16.507, E: -8.503, D: -13.594
+  Orientation -> W: 0.837, X: -0.028, Y: -0.005, Z: -0.547
+Lidar Zones -> Forward:38.46m, Right :22.02m, Left  :69.17m, Above :38.46m, Below :22.02m
+
+23:42:22:161 [INFO] State Polling: Started
+23:42:22:680 [INFO] Drone State at Mon May 11 23:42:22 2026:
+  Position  -> N: 17.446, E: -12.180, D: -13.728
+  Orientation -> W: 0.824, X: 0.071, Y: 0.014, Z: -0.562
+Lidar Zones -> Forward:37.26m, Right :36.68m, Left  :39.48m, Above :37.26m, Below :36.68m
+
+23:42:23:692 [INFO] State Polling: Completed
+23:42:24:453 [INFO] Yaw_Left Invoked
+23:42:27:907 [INFO] Yaw_Left Completed
+23:42:28:411 [INFO] Drone State at Mon May 11 23:42:28 2026:
+  Position  -> N: 19.710, E: -9.930, D: -13.268
+  Orientation -> W: 0.627, X: 0.004, Y: -0.010, Z: 0.779
+Lidar Zones -> Forward:35.67m, Right :44.91m, Left  :35.78m, Above :35.67m, Below :35.78m
+
+23:42:30:108 [INFO] State Polling: Started
+23:42:30:620 [INFO] Drone State at Mon May 11 23:42:30 2026:
+  Position  -> N: 19.451, E: -10.020, D: -13.376
+  Orientation -> W: 0.864, X: 0.003, Y: -0.006, Z: 0.504
+Lidar Zones -> Forward:35.49m, Right :47.58m, Left  :35.19m, Above :35.19m, Below :35.19m
+
+23:42:31:634 [INFO] State Polling: Completed
+23:42:32:373 [INFO] Move-Backward Invoked
+23:42:34:789 [INFO] Move-Backward Completed
+23:42:35:281 [INFO] Drone State at Mon May 11 23:42:35 2026:
+  Position  -> N: 13.409, E: -9.753, D: -14.419
+  Orientation -> W: 0.876, X: 0.015, Y: 0.026, Z: 0.481
+Lidar Zones -> Forward:41.77m, Right :23.57m, Left  :24.79m, Above :34.78m, Below :22.71m
+
+23:42:37:021 [INFO] State Polling: Started
+23:42:37:561 [INFO] Drone State at Mon May 11 23:42:37 2026:
+  Position  -> N: 10.114, E: -8.643, D: -14.512
+  Orientation -> W: 0.872, X: -0.023, Y: -0.087, Z: 0.482
+Lidar Zones -> Forward:40.93m, Right :37.98m, Left  :36.27m, Above :36.80m, Below :36.10m
+
+23:42:38:575 [INFO] State Polling: Completed
+23:42:39:278 [INFO] Yaw_Right Invoked
+23:42:42:737 [INFO] Yaw_Right Completed
+23:42:43:247 [INFO] Drone State at Mon May 11 23:42:43 2026:
+  Position  -> N: 13.615, E: -6.996, D: -14.171
+  Orientation -> W: 0.667, X: 0.011, Y: -0.008, Z: -0.745
+Lidar Zones -> Forward:41.72m, Right :47.07m, Left  :38.76m, Above :38.76m, Below :38.76m
+
+23:42:44:966 [INFO] State Polling: Started
+23:42:45:479 [INFO] Drone State at Mon May 11 23:42:45 2026:
+  Position  -> N: 13.445, E: -7.223, D: -14.263
+  Orientation -> W: 0.876, X: 0.005, Y: -0.005, Z: -0.483
+Lidar Zones -> Forward:41.55m, Right :47.12m, Left  :38.27m, Above :38.27m, Below :38.27m
+
+23:42:47:016 [INFO] Drone State at Mon May 11 23:42:47 2026:
+  Position  -> N: 13.642, E: -7.247, D: -14.224
+  Orientation -> W: 0.881, X: 0.004, Y: 0.004, Z: -0.473
+Lidar Zones -> Forward:42.20m, Right :47.22m, Left  :38.56m, Above :38.56m, Below :38.56m
+
+23:42:48:024 [INFO] State Polling: Completed
+23:42:48:708 [INFO] Flying square...
+23:42:48:738 [INFO] Closing User Control
+23:42:48:739 [INFO] Run number 156, has been closed and saved. Thank you.
+23:42:48:743 [ERROR] Failed to land drone: 'Drone' object has no attribute 'land' 
+23:42:48:746 [INFO] Disconnecting from simulation server...
+23:42:48:772 [INFO] Disconnected.
+23:42:48:774 [INFO] User Control Closed Successfully.
+23:42:48:774 [INFO] Run number 157 has been closed and saved to C:\Users\nyles\Desktop\Codrone\499-Codronev2\runs\RunCommands\Run_156_Commands.csv and C:\Users\nyles\Desktop\Codrone\499-Codronev2\runs\RunTelemetry\Run_156_Telemetry.csv. Thank you.

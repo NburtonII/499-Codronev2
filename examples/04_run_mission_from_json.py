@@ -25,14 +25,17 @@ from mission_runner import run_mission       # noqa: E402
 
 MISSION_FILES = [
     
-    os.path.join(
-        os.path.dirname(__file__), "..", "missions", "first_flight.json"
-    ),
-    os.path.join(
-        os.path.dirname(__file__), "..", "missions", "square_path.json"
-    ),
-    os.path.join(
-        os.path.dirname(__file__), "..", "missions", "Forward.json"
+    # os.path.join(
+    #     os.path.dirname(__file__), "..", "missions", "first_flight.json"
+    # ),
+    # os.path.join(
+    #     os.path.dirname(__file__), "..", "missions", "square_path.json"
+    # ),
+    # os.path.join(
+    #     os.path.dirname(__file__), "..", "missions", "Forward.json"
+    # )
+     os.path.join(
+         os.path.dirname(__file__), "..", "missions", "demo_week14.json"
     )
 ]
 
