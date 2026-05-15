@@ -12,27 +12,30 @@ This document equips readers and the development team to understand the codebase
 │   ├── ARCHITECTURE/              # Architecture documents (including this one)
 │   ├── BUILD INFO/                # Build details documentation
 │   ├── Presentation/              # Weekly presentations
+|   ├── releases                   # documentation for the releases (alpha build)
 │   ├── Sprints/                   # Weekly sprint plans
 │   └── Templates/                 # Documentation templates
 ├── examples/                      # Test run programs for the SDK
 ├── missions/                      # Preprogrammed drone movement instructions
 ├── runs/                          # Data produced for each run
 │   ├── RunCommands/               # Logs for each run command
+|   ├── RunEvents                  # logs for events (failures)
 │   ├── RunTelemetry/              # Drone telemetry data for each run
 │   └── Startup.json               # Startup information for each run
 ├── sdk/                           # Python client and simulation interaction scripts
-│   └── client/                    # Client scripts and libraries
+│   ├──client/                     # Client scripts and libraries
 │       ├── cpp/                   # AirSim C++ client files
 │       ├── projectairsim/         # AirSim Python libraries and build files
 │       ├── Python/                # Example scripts (IAMAI)
 │       └── simConfig/             # Drone configuration files
+|   └──ProjectAirSim               #ProjectAirSim cloned repo
 ├── sim/                           # Unreal Engine project files
-│   ├── Build/Windows/             # Weekly build files
 │   ├── Config/                   # Unreal configuration files
 │   ├── Content/                  # Models and assets for the simulation
 │   ├── Plugins/                  # Plugins (including Project AirSim)
 │   └── CodroneSim.uproject       # Unreal project file
 ├── tests/                        # Test missions
+│   ├── golden/                   # golden machine test
 ├── tools/                        # (Not used yet)
 ├── .gitattributes               # Git configuration
 ├── .gitignore                   # Ignored files
